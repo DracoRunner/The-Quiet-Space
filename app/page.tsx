@@ -1,25 +1,21 @@
-'use client';
+import BlogsPreviewSection from "../components/home/BlogsPreviewSection";
+import ConfessionsPreviewSection from "../components/home/ConfessionsPreviewSection";
+import FinalCTASection from "../components/home/FinalCTASection";
+import HeroSection from "../components/home/HeroSection";
+import ProcessSection from "../components/home/ProcessSection";
+import TestimonialsSection from "../components/home/TestimonialsSection";
 
-import React from 'react';
-import HeroSection from '../components/home/HeroSection';
-import ProcessSection from '../components/home/ProcessSection';
-import TestimonialsSection from '../components/home/TestimonialsSection';
-import BlogsPreviewSection from '../components/home/BlogsPreviewSection';
-import ConfessionsPreviewSection from '../components/home/ConfessionsPreviewSection';
-import FinalCTASection from '../components/home/FinalCTASection';
-import { useModal } from './ClientLayout';
-
-export default function HomePage() {
-  const { toggleModal } = useModal();
-
+const Home: React.FC = () => {
   return (
     <>
-      <HeroSection toggleModal={toggleModal} />
+      <HeroSection />
       <ProcessSection />
       <TestimonialsSection />
       <BlogsPreviewSection />
       <ConfessionsPreviewSection />
-      <FinalCTASection toggleModal={toggleModal} />
+      <FinalCTASection />
     </>
   );
-}
+};
+
+export default Home;

@@ -1,19 +1,13 @@
-import React from 'react';
+import type React from "react";
 
-// FIX: Updated CardProps to extend React.HTMLAttributes<HTMLDivElement> and updated the component
-// to forward additional props. This allows passing standard HTML attributes like `onClick` to the Card component.
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardProps {
   children: React.ReactNode;
   className?: string;
 }
 
-const Card: React.FC<CardProps> = ({ children, className = '', ...props }) => {
-  const baseClasses = 'bg-white rounded-xl shadow-lg';
-  return (
-    <div className={`${baseClasses} ${className}`} {...props}>
-      {children}
-    </div>
-  );
+const Card: React.FC<CardProps> = ({ children, className = "" }) => {
+  const baseClasses = "bg-white rounded-xl shadow-lg";
+  return <div className={`${baseClasses} ${className}`}>{children}</div>;
 };
 
 export default Card;
