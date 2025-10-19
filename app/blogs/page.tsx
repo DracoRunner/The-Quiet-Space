@@ -3,6 +3,9 @@ import ScrollAnimation from "##/components/common/ScrollAnimation";
 import { getBlogs } from "##/services/blogService";
 import type { RenderBlog } from "##/types/BlogType";
 
+// Mark this page as dynamic (not statically generated)
+export const dynamic = "force-dynamic";
+
 const Blogs = async () => {
   const blogPosts = await getBlogs();
 

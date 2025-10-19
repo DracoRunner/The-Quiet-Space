@@ -5,9 +5,28 @@ export const dynamic = "force-dynamic";
 import { readDb } from "##/lib/blogDb";
 
 // GET /api/blogs - list posts
-export async function GET() {
-  const items = await readDb();
-  return NextResponse.json(items);
+export async function GET(req: Request) {
+  const startTime = Date.now();
+  console.log("📥 [API] GET /api/blogs - Request received");
+
+  try {
+    const items = await readDb();
+    const duration = Date.now() - startTime;
+
+    console.log(
+      `✅ [API] GET /api/blogs - Success (${items.length} blogs, ${duration}ms)`,
+    );
+
+    return NextResponse.json(items);
+  } catch (error) {
+    const duration = Date.now() - startTime;
+    console.error(`❌ [API] GET /api/blogs - Error (${duration}ms):`, error);
+
+    return NextResponse.json(
+      { message: "Failed to fetch blogs", error: String(error) },
+      { status: 500 },
+    );
+  }
 }
 
 // // POST /api/blogs - create a post

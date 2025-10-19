@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Markdown from "##/components/Markdown";
-import { getBlogById } from "##/lib/blogDb";
+import { getBlogById } from "##/services/blogService";
+
+// Mark this page as dynamic (not statically generated)
+export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ id: string }> };
 
