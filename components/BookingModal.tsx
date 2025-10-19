@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import modalStore from "##/helpers/ModalHelper";
+import ModalHelper from "##/helpers/ModalHelper";
 
 const BookingModal: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -22,7 +22,7 @@ const BookingModal: React.FC = () => {
     const modal = modalRef.current;
     const content = contentRef.current;
     if (modal && content) {
-      if (modalStore.isOpen.value) {
+      if (ModalHelper.isOpen.value) {
         // Reset form state each time the modal opens
         setIsSubmitted(false);
         setFormData({ name: "", email: "", when: "", reason: "" });
@@ -46,12 +46,12 @@ const BookingModal: React.FC = () => {
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === modalRef.current) {
-      modalStore.close();
+      ModalHelper.close();
     }
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -69,12 +69,12 @@ const BookingModal: React.FC = () => {
 
     // Auto-close modal after a delay to show the success message
     setTimeout(() => {
-      modalStore.close();
+      ModalHelper.close();
     }, 3000);
   };
 
   if (
-    !modalStore.isOpen.value &&
+    !ModalHelper.isOpen.value &&
     modalRef.current?.classList.contains("hidden")
   )
     return null;
@@ -85,7 +85,7 @@ const BookingModal: React.FC = () => {
       ref={modalRef}
       onClick={handleOutsideClick}
       onKeyDown={(e) => {
-        if (e.key === "Escape") modalStore.close();
+        if (e.key === "Escape") ModalHelper.close();
       }}
       tabIndex={-1}
       className="fixed inset-0 bg-opacity-70 z-[100] hidden items-center justify-center p-4"
@@ -107,7 +107,7 @@ const BookingModal: React.FC = () => {
           </h3>
           <button
             type="button"
-            onClick={() => modalStore.close()}
+            onClick={() => ModalHelper.close()}
             className="text-[#2C3531] hover:text-red-500 transition"
             aria-label="Close modal"
           >

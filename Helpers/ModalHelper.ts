@@ -4,12 +4,10 @@ import type { ReactNode } from "react";
 const isOpen = signal(false);
 const content = signal<ReactNode | null>(null);
 
-const modalStore = {
+const ModalStore = {
   isOpen,
   content,
   open(node: ReactNode) {
-    console.log("opening modal");
-
     content.value = node;
     isOpen.value = true;
   },
@@ -26,4 +24,4 @@ const modalStore = {
   },
 };
 
-export default modalStore;
+export default ModalStore;

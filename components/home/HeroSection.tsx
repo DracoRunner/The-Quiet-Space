@@ -2,14 +2,14 @@
 import Image from "next/image";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
-import modalStore from "##/helpers/ModalHelper";
+import ModalHelper from "##/helpers/ModalHelper";
 import BookingModal from "../BookingModal";
 
 const HeroSection: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const onBookingClick = useCallback(() => {
-    modalStore.open(<BookingModal />);
+    ModalHelper.open(<BookingModal />);
   }, []);
 
   useEffect(() => {

@@ -2,14 +2,14 @@
 import Link from "next/link";
 import type React from "react";
 import { useCallback } from "react";
-import modalStore from "##/helpers/ModalHelper";
+import ModalHelper from "##/helpers/ModalHelper";
 import BookingModal from "./BookingModal";
 
 const Header: React.FC = () => {
   // styles handled via Tailwind classes
 
   const onBookingClick = useCallback(() => {
-    modalStore.open(<BookingModal />);
+    ModalHelper.open(<BookingModal />);
   }, []);
 
   return (
