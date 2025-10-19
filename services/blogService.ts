@@ -1,6 +1,28 @@
 import type { Blog } from "##/types/BlogType";
 
 /**
+ * Get the base URL for API calls
+ * Works on Vercel, local dev, and production
+ */
+function getBaseUrl(): string {
+  // Browser - use relative URL
+  if (typeof window !== "undefined") return "";
+
+  // Vercel - use VERCEL_URL
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // Custom deployment URL
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL;
+  }
+
+  // Local development
+  return `http://localhost:${process.env.PORT || 3000}`;
+}
+
+/**
  * Fetch blogs from the Next.js API backend
  * Works in both server and client components
  */
@@ -9,7 +31,7 @@ export async function getBlogs(): Promise<Blog[]> {
   const isServer = typeof window === "undefined";
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    const baseUrl = getBaseUrl();
     const url = `${baseUrl}/api/blogs`;
 
     console.log(
@@ -55,12 +77,7 @@ export async function getBlogById(id: string): Promise<Blog | null> {
   const isServer = typeof window === "undefined";
 
   try {
-    const baseUrl =
-      typeof window === "undefined"
-        ? process.env.NEXT_PUBLIC_SITE_URL ||
-          `http://localhost:${process.env.PORT || 3000}`
-        : "";
-
+    const baseUrl = getBaseUrl();
     const url = `${baseUrl}/api/blogs/${id}`;
 
     console.log(

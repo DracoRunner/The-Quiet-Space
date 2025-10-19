@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 import { readDb } from "##/lib/blogDb";
 
 // GET /api/blogs - list posts
-export async function GET(req: Request) {
+export async function GET() {
   const startTime = Date.now();
   console.log("📥 [API] GET /api/blogs - Request received");
 
