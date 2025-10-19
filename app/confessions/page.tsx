@@ -1,5 +1,4 @@
 "use client";
-import type { FC } from "react";
 import { useCallback, useRef, useState } from "react";
 import ScrollAnimation from "@/components/common/ScrollAnimation";
 import ConfessionCard from "@/components/confession/ConfessionCard";
@@ -7,7 +6,7 @@ import ConfessionForm from "@/components/confession/ConfessionForm";
 import ConfessionModal from "@/components/confession/ConfessionModal";
 import type { Confession } from "@/types";
 
-export const ConfessionPage: FC = () => {
+const ConfessionPage: React.FC = () => {
   const [confessions] = useState<Confession[]>([]);
   const [isLoading] = useState(true);
   const [selectedConfession, setSelectedConfession] =
