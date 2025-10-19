@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 import Card from '../common/Card';
 import ScrollAnimation from '../common/ScrollAnimation';
 
@@ -29,9 +29,9 @@ const ConfessionsPreviewSection: React.FC = () => {
                 </div>
                 <div className="text-center mt-12">
                      <ScrollAnimation delay={300}>
-                        <NavLink to="/confession" className="inline-block text-lg font-semibold text-[#2C3531] border-b-2 border-[#B48B7F] pb-1 hover:border-[#2C3531] transition duration-300">
+                        <Link href="/confession" className="inline-block text-lg font-semibold text-[#2C3531] border-b-2 border-[#B48B7F] pb-1 hover:border-[#2C3531] transition duration-300">
                             View & Share Confessions
-                        </NavLink>
+                        </Link>
                     </ScrollAnimation>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 import Card from '../common/Card';
 import ScrollAnimation from '../common/ScrollAnimation';
 
@@ -40,7 +40,7 @@ const BlogsPreviewSection: React.FC = () => {
                                     <p className="text-sm text-[#B48B7F] font-semibold mb-1">{blog.category}</p>
                                     <h4 className="text-xl font-semibold mb-2 text-[#2C3531]">{blog.title}</h4>
                                     <p className="text-gray-600 text-sm line-clamp-3">{blog.excerpt}</p>
-                                    <NavLink to="/blogs" className="inline-block mt-3 text-[#B48B7F] font-medium hover:text-[#2C3531] transition duration-300">Read More →</NavLink>
+                                    <Link href="/blogs" className="inline-block mt-3 text-[#B48B7F] font-medium hover:text-[#2C3531] transition duration-300">Read More →</Link>
                                 </div>
                             </Card>
                         </ScrollAnimation>
@@ -48,9 +48,9 @@ const BlogsPreviewSection: React.FC = () => {
                 </div>
                 <div className="text-center mt-12">
                     <ScrollAnimation delay={300}>
-                        <NavLink to="/blogs" className="inline-block text-lg font-semibold text-[#2C3531] border-b-2 border-[#B48B7F] pb-1 hover:border-[#2C3531] transition duration-300">
+                        <Link href="/blogs" className="inline-block text-lg font-semibold text-[#2C3531] border-b-2 border-[#B48B7F] pb-1 hover:border-[#2C3531] transition duration-300">
                             View All Articles
-                        </NavLink>
+                        </Link>
                     </ScrollAnimation>
                 </div>
             </div>

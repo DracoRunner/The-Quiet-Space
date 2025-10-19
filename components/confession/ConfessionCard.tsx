@@ -1,34 +1,41 @@
 import React from 'react';
-import { Confession as ConfessionType } from '../../types';
+import { Confession } from '../../types';
+import Card from '../common/Card';
 
 interface ConfessionCardProps {
-    confession: ConfessionType;
+    confession: Confession;
     onClick: () => void;
 }
 
-const TRUNCATE_LENGTH = 200;
+const formatTimeAgo = (date: Date): string => {
+    const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
+    if (seconds < 60) return `a few seconds ago`;
+    let interval = seconds / 31536000;
+    if (interval > 1) return Math.floor(interval) + " years ago";
+    interval = seconds / 2592000;
+    if (interval > 1) return Math.floor(interval) + " months ago";
+    interval = seconds / 86400;
+    if (interval > 1) return Math.floor(interval) + " days ago";
+    interval = seconds / 3600;
+    if (interval > 1) return Math.floor(interval) + " hours ago";
+    interval = seconds / 60;
+    if (interval > 1) return Math.floor(interval) + " minutes ago";
+    return Math.floor(seconds) + " seconds ago";
+}
 
 const ConfessionCard: React.FC<ConfessionCardProps> = ({ confession, onClick }) => {
-    const timeString = confession.timestamp.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) + ', ' + confession.timestamp.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-
-    const truncatedText = confession.text.length > TRUNCATE_LENGTH
-        ? confession.text.substring(0, TRUNCATE_LENGTH) + '...'
-        : confession.text;
-
     return (
-        <button 
+        <Card 
+            className="p-6 h-full flex flex-col cursor-pointer border-l-4 border-transparent hover:border-[#B48B7F] hover:shadow-2xl transition-all duration-300"
             onClick={onClick}
-            className="flex flex-col h-full bg-stone-50/80 rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-left w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B48B7F]"
-            aria-label="Read full confession"
         >
-            <p className="font-lora text-gray-800 italic text-lg whitespace-pre-wrap flex-grow">
-                {truncatedText}
+            <p className="text-gray-700 italic flex-grow line-clamp-4">
+                "{confession.text}"
             </p>
-            <div className="flex justify-between items-center mt-6 pt-3 border-t border-stone-200">
-                <p className="text-xs text-gray-400">{timeString}</p>
-                <p className="text-sm font-medium text-gray-500">— Anonymous</p>
-            </div>
-        </button>
+            <p className="text-right text-sm text-gray-400 mt-4">
+                {formatTimeAgo(new Date(confession.timestamp))}
+            </p>
+        </Card>
     );
 };
 
