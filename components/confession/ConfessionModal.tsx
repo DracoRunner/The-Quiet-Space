@@ -1,11 +1,11 @@
 import type React from "react";
 import { useEffect, useRef } from "react";
-import type { Confession as ConfessionType } from "@/types";
+import type { Confession } from "##/types/common";
 
 interface ConfessionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  confession: ConfessionType | null;
+  confession: Confession | null;
 }
 
 const ConfessionModal: React.FC<ConfessionModalProps> = ({

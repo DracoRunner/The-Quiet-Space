@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import modalStore from "@/Helpers/ModalHelper";
+import modalStore from "##/helpers/ModalHelper";
 
 const BookingModal: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -51,7 +51,7 @@ const BookingModal: React.FC = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));

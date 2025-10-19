@@ -1,10 +1,11 @@
 "use client";
+
 import { useCallback, useRef, useState } from "react";
-import ScrollAnimation from "@/components/common/ScrollAnimation";
-import ConfessionCard from "@/components/confession/ConfessionCard";
-import ConfessionForm from "@/components/confession/ConfessionForm";
-import ConfessionModal from "@/components/confession/ConfessionModal";
-import type { Confession } from "@/types";
+import ScrollAnimation from "##/components/common/ScrollAnimation";
+import ConfessionCard from "##/components/confession/ConfessionCard";
+import ConfessionForm from "##/components/confession/ConfessionForm";
+import ConfessionModal from "##/components/confession/ConfessionModal";
+import type { Confession } from "##/types/common";
 
 const ConfessionPage: React.FC = () => {
   const [confessions] = useState<Confession[]>([]);
@@ -17,7 +18,7 @@ const ConfessionPage: React.FC = () => {
     (
       text: string,
       color: string,
-      callback: (msg: { text: string; color: string } | null) => void
+      callback: (msg: { text: string; color: string } | null) => void,
     ) => {
       if (messageTimeoutRef.current) {
         clearTimeout(messageTimeoutRef.current);
@@ -27,7 +28,7 @@ const ConfessionPage: React.FC = () => {
         callback(null);
       }, 4000);
     },
-    []
+    [],
   );
 
   const handleCardClick = (confession: Confession) => {

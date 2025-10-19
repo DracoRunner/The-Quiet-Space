@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     implementation: "sass-embedded",
   },
   images: {
-    domains: ["picsum.photos"],
+    remotePatterns: [new URL("https://picsum.photos/seed/**")],
   },
 };
 

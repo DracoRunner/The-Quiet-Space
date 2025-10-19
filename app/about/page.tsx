@@ -1,7 +1,7 @@
-import FounderSection from "@/components/about/FounderSection";
-import MissionSection from "@/components/about/MissionSection";
-import PhilosophySection from "@/components/about/PhilosophySection";
-import ScrollAnimation from "@/components/common/ScrollAnimation";
+import FounderSection from "##/components/about/FounderSection";
+import MissionSection from "##/components/about/MissionSection";
+import PhilosophySection from "##/components/about/PhilosophySection";
+import ScrollAnimation from "##/components/common/ScrollAnimation";
 
 const About: React.FC = () => {
   return (

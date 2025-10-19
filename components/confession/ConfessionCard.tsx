@@ -1,5 +1,5 @@
 import type React from "react";
-import type { Confession } from "@/types/common";
+import type { Confession } from "##/types/common";
 
 interface ConfessionCardProps {
   confession: Confession;

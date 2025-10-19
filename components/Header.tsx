@@ -2,7 +2,7 @@
 import Link from "next/link";
 import type React from "react";
 import { useCallback } from "react";
-import modalStore from "@/Helpers/ModalHelper";
+import modalStore from "##/helpers/ModalHelper";
 import BookingModal from "./BookingModal";
 
 const Header: React.FC = () => {

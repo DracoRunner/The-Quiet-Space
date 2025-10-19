@@ -1,58 +1,11 @@
-import BlogCard from "@/components/blogs/BlogCard";
-import ScrollAnimation from "@/components/common/ScrollAnimation";
+import BlogCard from "##/components/blogs/BlogCard";
+import ScrollAnimation from "##/components/common/ScrollAnimation";
+import { getBlogs } from "##/services/blogService";
+import type { RenderBlog } from "##/types/BlogType";
 
-const blogPosts = [
-  {
-    title: "5 Simple Ways to Start Your Day Mindfully",
-    category: "Mindfulness",
-    readTime: 5,
-    excerpt:
-      "A brief guide to integrating quick, effective mindfulness practices into your morning routine for a centered day and improved focus...",
-    imageSeed: "mindfulness",
-  },
-  {
-    title: "Understanding and Halting the Stress Cycle",
-    category: "Stress",
-    readTime: 8,
-    excerpt:
-      "We break down the physical and emotional loop of stress and offer three practical interrupt techniques that work immediately...",
-    imageSeed: "stress",
-  },
-  {
-    title: "The Power of Boundaries in Digital Age Self-Care",
-    category: "Boundaries",
-    readTime: 10,
-    excerpt:
-      "Setting limits is a crucial act of self-love. Learn how to establish healthy digital and emotional boundaries that protect your energy...",
-    imageSeed: "boundaries",
-  },
-  {
-    title: "Why Rest Is Not A Reward (And How to Do It)",
-    category: "Self-Care",
-    readTime: 6,
-    excerpt:
-      "A deep dive into why viewing rest as transactional harms mental health and how to integrate non-negotiable restoration...",
-    imageSeed: "sleep",
-  },
-  {
-    title: "The Difference Between Processing and Dwelling",
-    category: "Coping",
-    readTime: 7,
-    excerpt:
-      "Understanding the subtle line between healthy emotional processing and harmful rumination, and how to change direction...",
-    imageSeed: "coping",
-  },
-  {
-    title: "Emotional Labor: Recognizing and Rebalancing the Load",
-    category: "Relationships",
-    readTime: 9,
-    excerpt:
-      "A guide to identifying emotional labor in personal and professional relationships and ensuring equitable distribution...",
-    imageSeed: "relationship",
-  },
-];
+const Blogs = async () => {
+  const blogPosts = await getBlogs();
 
-const Blogs: React.FC = () => {
   return (
     <main className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
       <ScrollAnimation>
@@ -96,9 +49,17 @@ const Blogs: React.FC = () => {
       </ScrollAnimation>
 
       <section className="grid md:grid-cols-3 gap-10">
-        {blogPosts.map((post, index) => (
-          <ScrollAnimation key={post.title} delay={index * 100}>
-            <BlogCard {...post} />
+        {blogPosts.map((post: RenderBlog, index: number) => (
+          <ScrollAnimation key={post.id ?? post.title} delay={index * 100}>
+            <BlogCard
+              title={post.title}
+              excerpt={post.excerpt ?? ""}
+              category={post.category ?? "General"}
+              readTime={post.readTime ?? 5}
+              imageSeed={post.slug ?? post.title}
+              slug={post.slug}
+              id={post.id}
+            />
           </ScrollAnimation>
         ))}
       </section>

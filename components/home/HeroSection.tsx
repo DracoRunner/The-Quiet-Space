@@ -2,7 +2,7 @@
 import Image from "next/image";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
-import modalStore from "@/Helpers/ModalHelper";
+import modalStore from "##/helpers/ModalHelper";
 import BookingModal from "../BookingModal";
 
 const HeroSection: React.FC = () => {

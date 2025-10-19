@@ -3,7 +3,7 @@
 import { useSignalEffect } from "@preact-signals/safe-react";
 import type React from "react";
 import { useRef, useState } from "react";
-import modalStore from "../Helpers/ModalHelper";
+import modalStore from "../helpers/ModalHelper";
 
 const Modal: React.FC = () => {
   const [open, setOpen] = useState(false);
