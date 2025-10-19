@@ -46,10 +46,12 @@ jobs:
       - name: Cache NodeModules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json', '**/pnpm-lock.yaml') }}
+          path: |
+            ~/.pnpm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/**/pnpm-lock.yaml') }}-
 
       - name: Install dependencies
         run: pnpm install
