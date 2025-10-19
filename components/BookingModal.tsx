@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import ModalHelper from "##/helpers/ModalHelper";
+import ModalManager from "##/utils/ModalManager";
 
 const BookingModal: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -22,7 +22,7 @@ const BookingModal: React.FC = () => {
     const modal = modalRef.current;
     const content = contentRef.current;
     if (modal && content) {
-      if (ModalHelper.isOpen.value) {
+      if (ModalManager.isVisible.value) {
         // Reset form state each time the modal opens
         setIsSubmitted(false);
         setFormData({ name: "", email: "", when: "", reason: "" });
@@ -46,7 +46,7 @@ const BookingModal: React.FC = () => {
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === modalRef.current) {
-      ModalHelper.close();
+      ModalManager.close();
     }
   };
 
@@ -69,12 +69,12 @@ const BookingModal: React.FC = () => {
 
     // Auto-close modal after a delay to show the success message
     setTimeout(() => {
-      ModalHelper.close();
+      ModalManager.close();
     }, 3000);
   };
 
   if (
-    !ModalHelper.isOpen.value &&
+    !ModalManager.isVisible.value &&
     modalRef.current?.classList.contains("hidden")
   )
     return null;
@@ -85,7 +85,7 @@ const BookingModal: React.FC = () => {
       ref={modalRef}
       onClick={handleOutsideClick}
       onKeyDown={(e) => {
-        if (e.key === "Escape") ModalHelper.close();
+        if (e.key === "Escape") ModalManager.close();
       }}
       tabIndex={-1}
       className="fixed inset-0 bg-opacity-70 z-[100] hidden items-center justify-center p-4"
@@ -107,7 +107,7 @@ const BookingModal: React.FC = () => {
           </h3>
           <button
             type="button"
-            onClick={() => ModalHelper.close()}
+            onClick={() => ModalManager.close()}
             className="text-[#2C3531] hover:text-red-500 transition"
             aria-label="Close modal"
           >

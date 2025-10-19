@@ -1,13 +1,13 @@
 "use client";
 import type React from "react";
 import { useCallback } from "react";
-import ModalHelper from "##/helpers/ModalHelper";
+import ModalManager from "##/utils/ModalManager";
 import BookingModal from "../BookingModal";
 import ScrollAnimation from "../common/ScrollAnimation";
 
 const FinalCTASection: React.FC = () => {
   const onBookingClick = useCallback(() => {
-    ModalHelper.open(<BookingModal />);
+    ModalManager.open(<BookingModal />);
   }, []);
 
   return (

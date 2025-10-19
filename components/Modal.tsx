@@ -3,7 +3,7 @@
 import { useSignalEffect } from "@preact-signals/safe-react";
 import type React from "react";
 import { useRef, useState } from "react";
-import ModalHelper from "##/helpers/ModalHelper";
+import ModalManager from "##/utils/ModalManager";
 
 const Modal: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -11,13 +11,13 @@ const Modal: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === modalRef.current && ModalHelper.isOpen.value) {
-      ModalHelper.close();
+    if (e.target === modalRef.current && ModalManager.isVisible.value) {
+      ModalManager.close();
     }
   };
 
   useSignalEffect(() => {
-    setOpen(ModalHelper.isOpen.value);
+    setOpen(ModalManager.isVisible.value);
   });
 
   if (!open) return null;
@@ -27,7 +27,7 @@ const Modal: React.FC = () => {
       ref={modalRef}
       onClick={handleOutsideClick}
       onKeyDown={(e) => {
-        if (e.key === "Escape") ModalHelper.close();
+        if (e.key === "Escape") ModalManager.close();
       }}
       tabIndex={-1}
       className="fixed inset-0 bg-black/30 z-[100] flex items-center justify-center p-4"
@@ -38,7 +38,7 @@ const Modal: React.FC = () => {
         <div className="flex justify-end">
           <button
             type="button"
-            onClick={() => ModalHelper.close()}
+            onClick={() => ModalManager.close()}
             className="text-gray-500 hover:text-gray-700"
             aria-label="Close"
           >
@@ -58,7 +58,7 @@ const Modal: React.FC = () => {
             </svg>
           </button>
         </div>
-        {ModalHelper.content.value}
+        {ModalManager.content.value}
       </div>
     </div>
   );
