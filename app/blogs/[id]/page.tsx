@@ -4,8 +4,7 @@ import Link from "next/link";
 import Markdown from "##/components/Markdown";
 import { getBlogById } from "##/services/blogService";
 
-// Mark this page as dynamic (not statically generated)
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 type Props = { params: Promise<{ id: string }> };
 

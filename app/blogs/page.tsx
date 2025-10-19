@@ -3,8 +3,13 @@ import ScrollAnimation from "##/components/common/ScrollAnimation";
 import { getBlogs } from "##/services/blogService";
 import type { RenderBlog } from "##/types/BlogType";
 
-// Mark this page as dynamic (not statically generated)
-export const dynamic = "force-dynamic";
+export const metadata = {
+  title: "Blogs - The Quiet Space",
+  description:
+    "Explore articles on mindfulness, emotional resilience, and personal growth at The Quiet Space.",
+};
+
+export const revalidate = 60;
 
 const Blogs = async () => {
   const blogPosts = await getBlogs();
