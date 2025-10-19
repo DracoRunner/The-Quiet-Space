@@ -40,6 +40,13 @@ export async function getBlogs(): Promise<Blog[]> {
 
     const res = await fetch(url, {
       cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+        // Add x-forwarded-host for Vercel internal routing
+        ...(isServer && process.env.VERCEL_URL
+          ? { "x-forwarded-host": process.env.VERCEL_URL }
+          : {}),
+      },
     });
 
     if (!res.ok) {
@@ -86,6 +93,13 @@ export async function getBlogById(id: string): Promise<Blog | null> {
 
     const res = await fetch(url, {
       cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+        // Add x-forwarded-host for Vercel internal routing
+        ...(isServer && process.env.VERCEL_URL
+          ? { "x-forwarded-host": process.env.VERCEL_URL }
+          : {}),
+      },
     });
 
     if (!res.ok) {
