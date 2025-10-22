@@ -6,10 +6,11 @@ import ConfessionCard from "##/components/confession/ConfessionCard";
 import ConfessionForm from "##/components/confession/ConfessionForm";
 import ConfessionModal from "##/components/confession/ConfessionModal";
 import type { Confession } from "##/types/common";
+import { useEffect } from "@preact-signals/safe-react/react";
 
 const ConfessionPage: React.FC = () => {
-  const [confessions] = useState<Confession[]>([]);
-  const [isLoading] = useState(true);
+  const [confessions, setConfessions] = useState<Confession[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedConfession, setSelectedConfession] =
     useState<Confession | null>(null);
   const messageTimeoutRef = useRef<number | null>(null);
@@ -18,7 +19,7 @@ const ConfessionPage: React.FC = () => {
     (
       text: string,
       color: string,
-      callback: (msg: { text: string; color: string } | null) => void,
+      callback: (msg: { text: string; color: string } | null) => void
     ) => {
       if (messageTimeoutRef.current) {
         clearTimeout(messageTimeoutRef.current);
@@ -28,7 +29,7 @@ const ConfessionPage: React.FC = () => {
         callback(null);
       }, 4000);
     },
-    [],
+    []
   );
 
   const handleCardClick = (confession: Confession) => {
@@ -38,6 +39,34 @@ const ConfessionPage: React.FC = () => {
   const handleCloseModal = () => {
     setSelectedConfession(null);
   };
+
+  const handleNewConfession = (newConfession: Confession) => {
+    setConfessions((prev) => [newConfession, ...prev]);
+  };
+
+  useEffect(() => {
+    const fetchConfessions = async () => {
+      try {
+        const res = await fetch("/api/confessions");
+        if (!res.ok) throw new Error("Failed to fetch confessions");
+        const data = await res.json();
+
+        const mapped: Confession[] = data.map((item: any) => ({
+          id: item.id,
+          content: item.content,
+          createdAt: new Date(item.createdAt),
+        }));
+
+        setConfessions(mapped);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchConfessions();
+  }, []);
 
   return (
     <>
@@ -57,7 +86,10 @@ const ConfessionPage: React.FC = () => {
 
         <ScrollAnimation delay={200}>
           <div className="max-w-4xl mx-auto">
-            <ConfessionForm showMessage={showMessage} />
+            <ConfessionForm
+              showMessage={showMessage}
+              onNewConfession={handleNewConfession}
+            />
           </div>
         </ScrollAnimation>
 
