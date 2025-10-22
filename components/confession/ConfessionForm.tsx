@@ -8,7 +8,7 @@ interface ConfessionFormProps {
   showMessage: (
     text: string,
     color: string,
-    callback: (msg: { text: string; color: string } | null) => void
+    callback: (msg: { text: string; color: string } | null) => void,
   ) => void;
   onNewConfession?: (confession: Confession) => void;
 }
@@ -31,7 +31,7 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({
       showMessage(
         "Please enter your thought before submitting.",
         "text-red-500",
-        setMessage
+        setMessage,
       );
       return;
     }
@@ -59,7 +59,7 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({
       showMessage(
         "Thought released! Thank you for sharing.",
         "text-[#2C3531]",
-        setMessage
+        setMessage,
       );
 
       onNewConfession?.(newConfessionObj);
@@ -68,7 +68,7 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({
       showMessage(
         "Error: Could not release thought. Please try again.",
         "text-red-500",
-        setMessage
+        setMessage,
       );
     } finally {
       setIsSubmitting(false);

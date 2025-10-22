@@ -19,7 +19,7 @@ const ConfessionPage: React.FC = () => {
     (
       text: string,
       color: string,
-      callback: (msg: { text: string; color: string } | null) => void
+      callback: (msg: { text: string; color: string } | null) => void,
     ) => {
       if (messageTimeoutRef.current) {
         clearTimeout(messageTimeoutRef.current);
@@ -29,7 +29,7 @@ const ConfessionPage: React.FC = () => {
         callback(null);
       }, 4000);
     },
-    []
+    [],
   );
 
   const handleCardClick = (confession: Confession) => {
