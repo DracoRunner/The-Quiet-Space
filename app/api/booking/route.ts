@@ -1,5 +1,5 @@
-import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -56,13 +56,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { message: "Booking request sent successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error sending booking email:", error);
     return NextResponse.json(
       { error: "Failed to process booking request" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -46,8 +46,8 @@ const Markdown: FC<Props> = ({ content, blogTitle, className }) => {
             const imgSrc = isAbsolute
               ? src
               : src.startsWith("/")
-              ? src
-              : `/${src}`;
+                ? src
+                : `/${src}`;
             const alt = (props.alt as string) ?? blogTitle ?? "";
             return (
               <Image

@@ -1,3 +1,10 @@
+import AboutKaagaz from "##/components/home/AboutKaagaz";
+import FAQ from "##/components/home/FAQ";
+import Founder from "##/components/home/Founder";
+import MythsAndFacts from "##/components/home/MythsAndFacts";
+import SignsOfStruggles from "##/components/home/SignsOfStruggles";
+import WhatIsMentalHealth from "##/components/home/WhatIsMentalHealth";
+import WhyItsImportant from "##/components/home/WhyItsImportant";
 import BlogsPreviewSection from "../components/home/BlogsPreviewSection";
 import ConfessionsPreviewSection from "../components/home/ConfessionsPreviewSection";
 import FinalCTASection from "../components/home/FinalCTASection";
@@ -9,10 +16,17 @@ const Home: React.FC = () => {
   return (
     <>
       <HeroSection />
+      <WhatIsMentalHealth />
+      <WhyItsImportant />
+      <SignsOfStruggles />
+      <MythsAndFacts />
       <ProcessSection />
       <TestimonialsSection />
       <BlogsPreviewSection />
       <ConfessionsPreviewSection />
+      <Founder />
+      <AboutKaagaz />
+      <FAQ />
       <FinalCTASection />
     </>
   );

@@ -28,14 +28,14 @@ const HeroSection: React.FC = () => {
         <div className="md:col-span-3 space-y-8">
           <p
             className={`text-lg text-[#B48B7F] font-semibold uppercase tracking-widest ${getAnimationClasses(
-              "delay-100"
+              "delay-100",
             )}`}
           >
             Grounded, Gentle, Growth
           </p>
           <h2
             className={`text-5xl md:text-7xl font-extrabold text-[#2C3531] leading-tight ${getAnimationClasses(
-              "delay-200"
+              "delay-200",
             )}`}
             style={{ transitionDelay: "200ms" }}
           >
@@ -44,7 +44,7 @@ const HeroSection: React.FC = () => {
           </h2>
           <p
             className={`text-xl text-gray-700 max-w-lg ${getAnimationClasses(
-              "delay-300"
+              "delay-300",
             )}`}
             style={{ transitionDelay: "350ms" }}
           >

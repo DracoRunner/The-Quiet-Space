@@ -38,13 +38,13 @@ class Logger {
   private shouldLog(level: LogLevel): boolean {
     // Always log errors
     if (level === "error") return true;
-    
+
     // In production, only log errors and warnings
     if (!isDev && level === "debug") return false;
-    
+
     // Log info only if verbose mode is enabled or in dev
     if (level === "info" && !isDev && !isVerbose) return false;
-    
+
     return true;
   }
 
@@ -77,11 +77,23 @@ class Logger {
     this.info(`📥 ${method} ${path} - Request received`);
   }
 
-  apiSuccess(method: string, path: string, duration: number, details?: string): void {
-    this.info(`✅ ${method} ${path} - Success (${duration}ms)${details ? ` - ${details}` : ""}`);
+  apiSuccess(
+    method: string,
+    path: string,
+    duration: number,
+    details?: string,
+  ): void {
+    this.info(
+      `✅ ${method} ${path} - Success (${duration}ms)${details ? ` - ${details}` : ""}`,
+    );
   }
 
-  apiError(method: string, path: string, duration: number, error: unknown): void {
+  apiError(
+    method: string,
+    path: string,
+    duration: number,
+    error: unknown,
+  ): void {
     this.error(`❌ ${method} ${path} - Error (${duration}ms)`, error);
   }
 

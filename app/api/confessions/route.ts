@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     if (!content || typeof content !== "string") {
       return NextResponse.json(
         { error: "Invalid confession content" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     console.error("Error creating confession:", error);
     return NextResponse.json(
       { error: "Failed to create confession" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
