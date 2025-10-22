@@ -61,16 +61,26 @@ const BookingModal: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate an API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      if (!response.ok) {
+        throw new Error("Failed to send booking request");
+      }
 
-    // Auto-close modal after a delay to show the success message
-    setTimeout(() => {
-      ModalManager.close();
-    }, 3000);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting booking:", error);
+      alert("Failed to send booking request. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (

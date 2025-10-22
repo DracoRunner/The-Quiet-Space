@@ -7,7 +7,7 @@ interface ConfessionFormProps {
   showMessage: (
     text: string,
     color: string,
-    callback: (msg: { text: string; color: string } | null) => void,
+    callback: (msg: { text: string; color: string } | null) => void
   ) => void;
 }
 
@@ -26,7 +26,7 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({ showMessage }) => {
       showMessage(
         "Please enter your thought before submitting.",
         "text-red-500",
-        setMessage,
+        setMessage
       );
       return;
     }
@@ -35,17 +35,29 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({ showMessage }) => {
     showMessage("Submitting your thought...", "text-[#B48B7F]", setMessage);
 
     try {
+      const response = await fetch("/api/confessions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: text }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit confession");
+      }
+
       setNewConfession("");
       showMessage(
         "Thought released! Thank you for sharing.",
         "text-[#2C3531]",
-        setMessage,
+        setMessage
       );
     } catch (_error) {
       showMessage(
         "Error: Could not release thought. Please try again.",
         "text-red-500",
-        setMessage,
+        setMessage
       );
     } finally {
       setIsSubmitting(false);
