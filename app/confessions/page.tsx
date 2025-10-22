@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "@preact-signals/safe-react/react";
 import { useCallback, useRef, useState } from "react";
 import ScrollAnimation from "##/components/common/ScrollAnimation";
 import ConfessionCard from "##/components/confession/ConfessionCard";
@@ -8,8 +9,8 @@ import ConfessionModal from "##/components/confession/ConfessionModal";
 import type { Confession } from "##/types/common";
 
 const ConfessionPage: React.FC = () => {
-  const [confessions] = useState<Confession[]>([]);
-  const [isLoading] = useState(true);
+  const [confessions, setConfessions] = useState<Confession[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedConfession, setSelectedConfession] =
     useState<Confession | null>(null);
   const messageTimeoutRef = useRef<number | null>(null);
@@ -39,6 +40,41 @@ const ConfessionPage: React.FC = () => {
     setSelectedConfession(null);
   };
 
+  const handleNewConfession = (newConfession: Confession) => {
+    setConfessions((prev) => [newConfession, ...prev]);
+  };
+
+  useEffect(() => {
+    const fetchConfessions = async () => {
+      try {
+        const res = await fetch("/api/confessions");
+        if (!res.ok) throw new Error("Failed to fetch confessions");
+        const data = await res.json();
+
+        const mapped: Confession[] = (data as Array<unknown>).map((item) => {
+          const it = item as {
+            id?: string;
+            content?: string;
+            createdAt?: string | number;
+          };
+          return {
+            id: it.id ?? "",
+            content: it.content ?? "",
+            createdAt: new Date(it.createdAt ?? Date.now()),
+          };
+        });
+
+        setConfessions(mapped);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchConfessions();
+  }, []);
+
   return (
     <>
       <main className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
@@ -57,7 +93,10 @@ const ConfessionPage: React.FC = () => {
 
         <ScrollAnimation delay={200}>
           <div className="max-w-4xl mx-auto">
-            <ConfessionForm showMessage={showMessage} />
+            <ConfessionForm
+              showMessage={showMessage}
+              onNewConfession={handleNewConfession}
+            />
           </div>
         </ScrollAnimation>
 

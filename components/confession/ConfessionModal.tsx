@@ -47,12 +47,12 @@ const ConfessionModal: React.FC<ConfessionModalProps> = ({
   if (!confession) return null;
 
   const timeString =
-    confession.timestamp.toLocaleTimeString("en-US", {
+    confession.createdAt.toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
     }) +
     ", " +
-    confession.timestamp.toLocaleDateString("en-US", {
+    confession.createdAt.toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
     });
@@ -100,7 +100,7 @@ const ConfessionModal: React.FC<ConfessionModalProps> = ({
 
         <div className="bg-stone-50/80 rounded-lg p-6">
           <p className="font-lora text-gray-800 italic text-xl whitespace-pre-wrap">
-            {confession.text}
+            {confession.content}
           </p>
           <div className="flex justify-between items-center mt-6 pt-3 border-t border-stone-200">
             <p className="text-sm text-gray-400">{timeString}</p>

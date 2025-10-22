@@ -1,5 +1,6 @@
 import type React from "react";
 import { useState } from "react";
+import type { Confession } from "##/services/confessionService";
 
 const MAX_CHARS = 500;
 
@@ -9,9 +10,13 @@ interface ConfessionFormProps {
     color: string,
     callback: (msg: { text: string; color: string } | null) => void,
   ) => void;
+  onNewConfession?: (confession: Confession) => void;
 }
 
-const ConfessionForm: React.FC<ConfessionFormProps> = ({ showMessage }) => {
+const ConfessionForm: React.FC<ConfessionFormProps> = ({
+  showMessage,
+  onNewConfession,
+}) => {
   const [newConfession, setNewConfession] = useState("");
   const [message, setMessage] = useState<{
     text: string;
@@ -22,7 +27,7 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({ showMessage }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const text = newConfession.trim();
-    if (text.length === 0) {
+    if (!text) {
       showMessage(
         "Please enter your thought before submitting.",
         "text-red-500",
@@ -33,19 +38,22 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({ showMessage }) => {
 
     setIsSubmitting(true);
     showMessage("Submitting your thought...", "text-[#B48B7F]", setMessage);
-
+    console.log(text);
     try {
       const response = await fetch("/api/confessions", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: text }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit confession");
-      }
+      if (!response.ok) throw new Error("Failed to submit confession");
+      const confession = await response.json();
+      console.log(confession);
+      const newConfessionObj: Confession = {
+        id: confession.id,
+        content: confession.content,
+        createdAt: new Date(confession.createdAt),
+      };
 
       setNewConfession("");
       showMessage(
@@ -53,7 +61,10 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({ showMessage }) => {
         "text-[#2C3531]",
         setMessage,
       );
-    } catch (_error) {
+
+      onNewConfession?.(newConfessionObj);
+    } catch (_err) {
+      // _err intentionally unused - we still want to show a user-friendly message
       showMessage(
         "Error: Could not release thought. Please try again.",
         "text-red-500",

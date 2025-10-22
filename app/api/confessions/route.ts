@@ -1,6 +1,19 @@
 import { NextResponse } from "next/server";
 import { confessionService } from "##/services/confessionService";
 
+export async function GET() {
+  try {
+    const confessions = await confessionService.getAllConfessions();
+    return NextResponse.json(confessions, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching confessions:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch confessions" },
+      { status: 500 },
+    );
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { content } = await request.json();

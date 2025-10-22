@@ -1,6 +1,7 @@
 export interface Confession {
   id: string;
-  text: string;
-  timestamp: Date;
+  content: string;
+  createdAt: Date;
 }
+
 export type ToggleModalFunction = (show: boolean) => void;
