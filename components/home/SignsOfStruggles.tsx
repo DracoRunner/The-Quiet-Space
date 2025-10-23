@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type React from "react";
 
 const HeartCheckIcon = () => (
@@ -51,7 +52,15 @@ const SignsOfStruggles: React.FC = () => {
             </StruggleCard>
           </div>
 
-          <div className="relative"></div>
+          <div className="relative h-[400px]">
+            <Image
+              src="/images/struggles.webp"
+              alt="Signs of Mental Health Struggles"
+              layout="fill"
+              objectFit="cover"
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </section>

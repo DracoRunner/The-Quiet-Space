@@ -30,5 +30,6 @@
   "eslint.workingDirectories": [],
   "files.eol": "\n",
   "stylelint.enable": true,
-  "scss.validate": false
+  "scss.validate": false,
+  "cSpell.words": ["neondatabase", "turbopack"]
 }

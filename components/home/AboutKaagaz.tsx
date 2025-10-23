@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type React from "react";
 
 const AboutKaagaz: React.FC = () => {
@@ -29,13 +28,13 @@ const AboutKaagaz: React.FC = () => {
             </button>
           </div>
           <div className="md:col-span-2">
-            <Image
+            {/* <Image
               src="https://placehold.co/400x500/1E3A2B/F0F2EF?text=KAAGAZ"
               alt="Book cover of Kaagaz"
               className="rounded-lg shadow-2xl w-full object-cover aspect-[4/5]"
               width={400}
               height={500}
-            />
+            /> */}
           </div>
         </div>
       </div>

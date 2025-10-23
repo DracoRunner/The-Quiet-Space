@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type React from "react";
 
 const Founder: React.FC = () => {
@@ -8,14 +7,13 @@ const Founder: React.FC = () => {
         {/* Founder Section */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
           <div className="md:col-span-2">
-            {/* Placeholder for Founder's portrait */}
-            <Image
+            {/* <Image
               src="https://placehold.co/400x500/D0D6C9/1E3A2B?text=Satwikk+Arora"
               alt="Satwikk Arora, Founder"
               className="rounded-lg shadow-2xl w-full object-cover aspect-[4/5]"
               width={400}
               height={500}
-            />
+            /> */}
           </div>
           <div className="md:col-span-3">
             <h3 className="text-sm font-bold uppercase tracking-widest text-[#006442] mb-1">

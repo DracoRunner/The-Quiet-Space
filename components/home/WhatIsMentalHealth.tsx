@@ -1,4 +1,5 @@
-import { Heart, Users } from "lucide-react";
+import { Heart } from "lucide-react";
+import Image from "next/image";
 
 function WhatIsMentalHealthSection() {
   return (
@@ -45,18 +46,14 @@ function WhatIsMentalHealthSection() {
               </p>
             </div>
           </div>
-          <div className="relative">
-            <div className="bg-white/70 backdrop-blur-sm p-8 rounded-3xl shadow-xl">
-              <div className="w-full h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center relative">
-                <Users size={100} className="text-slate-600" />
-                <div className="absolute top-4 right-4 bg-white p-3 rounded-xl shadow-md">
-                  <p className="text-xs text-sage-700 italic">
-                    Mental health isn't just about what we feel—it defines who
-                    we are
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="relative h-[500px] w-full">
+            <Image
+              src="/images/whatismh.webp"
+              alt="What is Mental Health"
+              layout="fill"
+              objectFit="contain"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>

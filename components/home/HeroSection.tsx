@@ -31,16 +31,17 @@ const HeroSection: React.FC = () => {
               "delay-100",
             )}`}
           >
-            Grounded, Gentle, Growth
+            Introspect, Identify, Heal
           </p>
           <h2
-            className={`text-5xl md:text-7xl font-extrabold text-[#2C3531] leading-tight ${getAnimationClasses(
+            className={`text-5xl md:text-6xl font-extrabold text-[#2C3531] leading-tight ${getAnimationClasses(
               "delay-200",
             )}`}
             style={{ transitionDelay: "200ms" }}
           >
-            Find Clarity and <span className="text-[#B48B7F]">Deep Rest</span>{" "}
-            in a Busy World.
+            Find your solitude and&nbsp;
+            <span className="text-[#B48B7F]">Meet Yourself</span>
+            &nbsp;in the crowd
           </h2>
           <p
             className={`text-xl text-gray-700 max-w-lg ${getAnimationClasses(
@@ -48,9 +49,8 @@ const HeroSection: React.FC = () => {
             )}`}
             style={{ transitionDelay: "350ms" }}
           >
-            We provide personalized, private 1:1 sessions focusing on mindful
-            resilience and emotional regulation. Start with a foundation built
-            on trust and expertise.
+            We provide personalized, private 1:1 sessions focusing on your
+            personal journey and identifying deep wounds/ issues for resolution.
           </p>
           <div
             className={getAnimationClasses("delay-500")}

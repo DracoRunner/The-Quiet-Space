@@ -1,5 +1,5 @@
+import Image from "next/image";
 import type React from "react";
-import LottieAnimation from "../LottieAnimation";
 
 interface MythFactCardProps {
   myth: string;
@@ -52,10 +52,13 @@ const MythsAndFacts: React.FC = () => {
               <MythFactCard key={item.myth} myth={item.myth} fact={item.fact} />
             ))}
           </div>
-          <div className="flex items-center justify-center">
-            <LottieAnimation
-              src="https://lottie.host/14b3d324-733c-4034-92d8-2b477b94a282/8GQEi32C0d.json"
-              className="max-w-md"
+          <div className="relative h-[300px] w-full">
+            <Image
+              src="/images/myths.webp"
+              alt="Common Myths & Facts"
+              layout="fill"
+              objectFit="cover"
+              loading="lazy"
             />
           </div>
         </div>

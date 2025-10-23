@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type React from "react";
 
 const ListItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -25,7 +26,15 @@ const WhyItsImportant: React.FC = () => {
   return (
     <section id="importance" className=" py-24 px-4">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <div className="flex justify-center"></div>
+        <div className="h-[400px] relative">
+          <Image
+            src="/images/whyimp.webp"
+            alt="Why It's Important"
+            layout="fill"
+            objectFit="contain"
+            loading="lazy"
+          />
+        </div>
         <div>
           <h2 className="text-4xl md:text-5xl font-extrabold mb-8 uppercase tracking-wide">
             Why It's Important

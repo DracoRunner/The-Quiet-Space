@@ -23,7 +23,7 @@ const ProcessSection: React.FC = () => {
               </h4>
               <p className="text-gray-600">
                 Schedule your introductory session to discuss your needs and
-                goals.
+                goals
               </p>
             </div>
           </ScrollAnimation>
@@ -36,8 +36,8 @@ const ProcessSection: React.FC = () => {
                 Discover
               </h4>
               <p className="text-gray-600">
-                Engage in personalized 1:1 work to uncover patterns and build
-                awareness.
+                Engage in personalized 1:1 session to uncover patterns and
+                reason behind the underlying issue.
               </p>
             </div>
           </ScrollAnimation>
@@ -50,8 +50,8 @@ const ProcessSection: React.FC = () => {
                 Flourish
               </h4>
               <p className="text-gray-600">
-                Integrate new tools and experience lasting, positive
-                transformation.
+                Experience lasting, positive transformation post the session and
+                give a chance to meet the real “you”.
               </p>
             </div>
           </ScrollAnimation>
