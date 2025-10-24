@@ -30,9 +30,10 @@ const WhyItsImportant: React.FC = () => {
           <Image
             src="/images/whyimp.webp"
             alt="Why It's Important"
-            layout="fill"
-            objectFit="contain"
             loading="lazy"
+            className="w-full h-full object-contain"
+            width="100"
+            height="100"
           />
         </div>
         <div>

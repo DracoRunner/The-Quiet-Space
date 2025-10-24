@@ -47,11 +47,7 @@ const Header: React.FC = () => {
             Confession
           </Link>
         </nav>
-        <button
-          onClick={onBookingClick}
-          type="button"
-          className="bg-[#2C3531] text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-[1.02] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B48B7F]"
-        >
+        <button onClick={onBookingClick} type="button" className="btn-sm">
           Book Session
         </button>
         <button

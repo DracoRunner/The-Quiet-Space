@@ -59,7 +59,7 @@ const HeroSection: React.FC = () => {
             <button
               onClick={onBookingClick}
               type="button"
-              className="inline-block bg-[#2C3531] text-white text-xl font-semibold py-4 px-10 rounded-lg shadow-2xl transition duration-300 transform hover:scale-[1.02] hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B48B7F]"
+              className="btn-primary"
             >
               Book Your Discovery Call
             </button>

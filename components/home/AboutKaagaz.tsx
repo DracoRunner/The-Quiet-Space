@@ -20,10 +20,7 @@ const AboutKaagaz: React.FC = () => {
               their identity, and embrace the possibility of growth and renewal
               after heartbreak.
             </p>
-            <button
-              type="button"
-              className="bg-[#1E3A2B] text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:bg-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-400/50"
-            >
+            <button type="button" className="btn-pill">
               Buy Kaagaz Now
             </button>
           </div>

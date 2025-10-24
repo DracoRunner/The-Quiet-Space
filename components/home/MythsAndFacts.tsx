@@ -56,9 +56,10 @@ const MythsAndFacts: React.FC = () => {
             <Image
               src="/images/myths.webp"
               alt="Common Myths & Facts"
-              layout="fill"
-              objectFit="cover"
               loading="lazy"
+              className="w-full h-full object-cover"
+              width="100"
+              height="100"
             />
           </div>
         </div>

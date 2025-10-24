@@ -50,9 +50,10 @@ function WhatIsMentalHealthSection() {
             <Image
               src="/images/whatismh.webp"
               alt="What is Mental Health"
-              layout="fill"
-              objectFit="contain"
               loading="lazy"
+              className="w-full h-full object-contain"
+              width="100"
+              height="100"
             />
           </div>
         </div>

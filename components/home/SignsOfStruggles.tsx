@@ -56,9 +56,10 @@ const SignsOfStruggles: React.FC = () => {
             <Image
               src="/images/struggles.webp"
               alt="Signs of Mental Health Struggles"
-              layout="fill"
-              objectFit="cover"
               loading="lazy"
+              className="w-full h-full object-contain"
+              width="100"
+              height="100"
             />
           </div>
         </div>
