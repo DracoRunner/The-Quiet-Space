@@ -1,49 +1,23 @@
+"use client";
+
 import type React from "react";
-import { useEffect, useRef } from "react";
-import type { Confession } from "##/types/common";
+import { useRef } from "react";
+import type { Confession } from "##/types/Confession";
+import ModalManager from "##/utils/ModalManager";
 
 interface ConfessionModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  confession: Confession | null;
+  confession: Confession;
 }
 
-const ConfessionModal: React.FC<ConfessionModalProps> = ({
-  isOpen,
-  onClose,
-  confession,
-}) => {
+const ConfessionModal: React.FC<ConfessionModalProps> = ({ confession }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const modal = modalRef.current;
-    const content = contentRef.current;
-    if (modal && content) {
-      if (isOpen) {
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-        setTimeout(() => {
-          content.classList.remove("scale-95", "opacity-0");
-          content.classList.add("scale-100", "opacity-100");
-        }, 10);
-      } else {
-        content.classList.remove("scale-100", "opacity-100");
-        content.classList.add("scale-95", "opacity-0");
-        setTimeout(() => {
-          modal.classList.remove("flex");
-          modal.classList.add("hidden");
-        }, 300);
-      }
-    }
-  }, [isOpen]);
-
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === modalRef.current) {
-      onClose();
+      ModalManager.close();
     }
   };
-
   if (!confession) return null;
 
   const timeString =
@@ -62,20 +36,20 @@ const ConfessionModal: React.FC<ConfessionModalProps> = ({
       ref={modalRef}
       onClick={handleOutsideClick}
       onKeyDown={(e) => {
-        if (e.key === "Escape") onClose();
+        if (e.key === "Escape") ModalManager.close();
       }}
       tabIndex={-1}
-      className="fixed inset-0 bg-[#2C3531] bg-opacity-70 z-[100] hidden items-center justify-center p-4"
+      className="fixed flex inset-0 bg-opacity-70 z-[100] items-center justify-center "
       role="dialog"
       aria-modal="true"
     >
       <div
         ref={contentRef}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 transform transition-all duration-300 scale-95 opacity-0 relative"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 transform transition-all duration-300 relative"
       >
         <button
           type="button"
-          onClick={onClose}
+          onClick={() => ModalManager.close()}
           className="absolute top-4 right-4 text-[#2C3531] hover:text-red-500 transition"
           aria-label="Close modal"
         >

@@ -31,5 +31,5 @@
   "files.eol": "\n",
   "stylelint.enable": true,
   "scss.validate": false,
-  "cSpell.words": ["neondatabase", "turbopack"]
+  "cSpell.words": ["Jitsi", "neondatabase", "turbopack"]
 }

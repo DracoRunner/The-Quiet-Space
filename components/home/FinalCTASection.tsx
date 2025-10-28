@@ -1,15 +1,8 @@
-"use client";
 import type React from "react";
-import { useCallback } from "react";
-import ModalManager from "##/utils/ModalManager";
-import BookingModal from "../BookingModal";
+import BookingButton from "../BookingButton";
 import ScrollAnimation from "../common/ScrollAnimation";
 
 const FinalCTASection: React.FC = () => {
-  const onBookingClick = useCallback(() => {
-    ModalManager.open(<BookingModal />);
-  }, []);
-
   return (
     <section id="booking-cta" className="py-20 bg-[#2C3531]">
       <ScrollAnimation>
@@ -20,13 +13,7 @@ const FinalCTASection: React.FC = () => {
           <p className="text-xl text-gray-300 mb-8">
             Schedule your confidential, non-judgmental 1:1 session today.
           </p>
-          <button
-            onClick={onBookingClick}
-            type="button"
-            className="inline-block bg-[#B48B7F] text-white font-extrabold text-2xl py-4 px-12 rounded-lg shadow-2xl transition duration-300 transform hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
-          >
-            Book 1:1 Session Now
-          </button>
+          <BookingButton className="inline-block bg-[#B48B7F] text-white font-extrabold text-2xl py-4 px-12 rounded-lg shadow-2xl transition duration-300 transform hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white" />
         </div>
       </ScrollAnimation>
     </section>

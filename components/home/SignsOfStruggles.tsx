@@ -58,8 +58,8 @@ const SignsOfStruggles: React.FC = () => {
               alt="Signs of Mental Health Struggles"
               loading="lazy"
               className="w-full h-full object-contain"
-              width="100"
-              height="100"
+              width="2000"
+              height="2666"
             />
           </div>
         </div>

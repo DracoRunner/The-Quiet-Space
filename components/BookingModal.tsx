@@ -1,12 +1,15 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import BookingService from "##/services/bookingService";
 import ModalManager from "##/utils/ModalManager";
 
 const BookingModal: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -16,33 +19,6 @@ const BookingModal: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  // Effect to control modal visibility animation and reset state
-  useEffect(() => {
-    const modal = modalRef.current;
-    const content = contentRef.current;
-    if (modal && content) {
-      if (ModalManager.isVisible.value) {
-        // Reset form state each time the modal opens
-        setIsSubmitted(false);
-        setFormData({ name: "", email: "", when: "", reason: "" });
-
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-        setTimeout(() => {
-          content.classList.remove("scale-95", "opacity-0");
-          content.classList.add("scale-100", "opacity-100");
-        }, 10);
-      } else {
-        content.classList.remove("scale-100", "opacity-100");
-        content.classList.add("scale-95", "opacity-0");
-        setTimeout(() => {
-          modal.classList.remove("flex");
-          modal.classList.add("hidden");
-        }, 300);
-      }
-    }
-  }, []);
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === modalRef.current) {
@@ -62,19 +38,36 @@ const BookingModal: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const result = await BookingService.createBooking({
+        name: formData.name,
+        email: formData.email,
+        when: formData.when,
+        reason: formData.reason,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to send booking request");
+      // compute SHA-256 hash of the email and store booking info locally
+      const encoder = new TextEncoder();
+      const data = encoder.encode(formData.email.trim().toLowerCase());
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      // base64url encode
+      const b64 = btoa(String.fromCharCode(...hashArray));
+      const base64url = b64
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+
+      const store = { bookingId: result.bookingId, emailHash: base64url };
+      try {
+        localStorage.setItem("tqs_booking", JSON.stringify(store));
+      } catch (_err) {
+        // ignore storage errors
       }
 
       setIsSubmitted(true);
+      // close modal and redirect to bookings manage page
+      ModalManager.close();
+      router.push("/bookings");
     } catch (error) {
       console.error("Error submitting booking:", error);
       alert("Failed to send booking request. Please try again later.");
@@ -98,7 +91,7 @@ const BookingModal: React.FC = () => {
         if (e.key === "Escape") ModalManager.close();
       }}
       tabIndex={-1}
-      className="fixed inset-0 bg-opacity-70 z-[100] hidden items-center justify-center p-4"
+      className="fixed inset-0 bg-opacity-70 z-[100] flex items-center justify-center p-4"
       aria-modal="true"
       role="dialog"
       aria-labelledby="bookingModalTitle"
@@ -106,7 +99,7 @@ const BookingModal: React.FC = () => {
       <div
         id="modalContent"
         ref={contentRef}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 transform transition-all duration-300 scale-95 opacity-0"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 transform transition-all duration-300"
       >
         <div className="flex justify-between items-start mb-6">
           <h3

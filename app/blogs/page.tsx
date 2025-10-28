@@ -1,7 +1,7 @@
 import BlogCard from "##/components/blogs/BlogCard";
 import ScrollAnimation from "##/components/common/ScrollAnimation";
-import { getBlogs } from "##/services/blogService";
-import type { RenderBlog } from "##/types/BlogType";
+import BlogService from "##/services/blogService";
+import type { RenderBlog } from "##/types/Blog";
 
 export const metadata = {
   title: "Blogs - The Quiet Space",
@@ -12,8 +12,7 @@ export const metadata = {
 export const revalidate = 60;
 
 const Blogs = async () => {
-  const blogPosts = await getBlogs();
-
+  const blogPosts = await BlogService.getBlogs();
   return (
     <main className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
       <ScrollAnimation>
@@ -58,42 +57,11 @@ const Blogs = async () => {
 
       <section className="grid md:grid-cols-3 gap-10">
         {blogPosts.map((post: RenderBlog, index: number) => (
-          <ScrollAnimation key={post.id ?? post.title} delay={index * 100}>
-            <BlogCard
-              title={post.title}
-              excerpt={post.excerpt ?? ""}
-              category={post.category ?? "General"}
-              readTime={post.readTime ?? 5}
-              imageSeed={post.slug ?? post.title}
-              slug={post.slug}
-              id={post.id}
-            />
+          <ScrollAnimation key={post.slug} delay={index * 100}>
+            <BlogCard key={post.slug} {...post} />
           </ScrollAnimation>
         ))}
       </section>
-
-      <ScrollAnimation delay={300}>
-        <div className="flex justify-center space-x-2 mt-16">
-          <button
-            type="button"
-            className="bg-[#B48B7F] text-white w-10 h-10 rounded-full font-semibold"
-          >
-            1
-          </button>
-          <button
-            type="button"
-            className="bg-white text-[#2C3531] w-10 h-10 rounded-full font-semibold border border-gray-300 hover:bg-gray-100"
-          >
-            2
-          </button>
-          <button
-            type="button"
-            className="bg-white text-[#2C3531] w-10 h-10 rounded-full font-semibold border border-gray-300 hover:bg-gray-100"
-          >
-            3
-          </button>
-        </div>
-      </ScrollAnimation>
     </main>
   );
 };

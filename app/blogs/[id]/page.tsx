@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import AppImage from "##/components/AppImage";
 import Markdown from "##/components/Markdown";
-import { getBlogById } from "##/services/blogService";
+import BlogService from "##/services/BlogService";
 
 export const revalidate = 60;
 
-type Props = { params: Promise<{ id: string }> };
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const blog = await getBlogById(params.id);
+  const blog = await BlogService.getBlogBySlug(params.slug);
   return {
     title: blog?.title ?? "Blog",
     description: blog?.excerpt ?? undefined,
@@ -19,7 +19,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function BlogPage(props: Props) {
   const params = await props.params;
-  const blog = await getBlogById(params.id);
+  const blog = await BlogService.getBlogBySlug(params.slug);
+
   if (!blog) {
     return (
       <main className="max-w-4xl mx-auto py-20 px-4">
@@ -31,7 +32,7 @@ export default async function BlogPage(props: Props) {
       </main>
     );
   }
-  // render markdown using react-markdown (server can render this too)
+
   const mdContent = blog.content ?? "";
 
   return (
@@ -51,11 +52,11 @@ export default async function BlogPage(props: Props) {
           {new Date(blog.publishedAt ?? "").toLocaleDateString()}
         </p>
         <div className="mb-8">
-          <Image
-            src={`https://picsum.photos/seed/${blog.slug}/1200/600`}
+          <AppImage
+            imageUrl={blog.imageSeed}
             width={1200}
             height={600}
-            alt={blog.title}
+            altText={blog.title}
             className="w-full h-auto object-cover rounded"
           />
         </div>
