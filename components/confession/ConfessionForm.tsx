@@ -1,81 +1,60 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import type React from "react";
-import { useState } from "react";
-import type { Confession } from "##/services/confessionService";
+import { useCallback, useState } from "react";
 
 const MAX_CHARS = 500;
 
-interface ConfessionFormProps {
-  showMessage: (
-    text: string,
-    color: string,
-    callback: (msg: { text: string; color: string } | null) => void,
-  ) => void;
-  onNewConfession?: (confession: Confession) => void;
-}
-
-const ConfessionForm: React.FC<ConfessionFormProps> = ({
-  showMessage,
-  onNewConfession,
-}) => {
-  const [newConfession, setNewConfession] = useState("");
+const ConfessionForm: React.FC = () => {
+  const [confessionMessage, setConfessionMessage] = useState("");
   const [message, setMessage] = useState<{
     text: string;
     color: string;
   } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+
+  const showMessage = useCallback((text: string, color: string) => {
+    setMessage({ text, color });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const text = newConfession.trim();
+    const text = confessionMessage.trim();
     if (!text) {
       showMessage(
         "Please enter your thought before submitting.",
         "text-red-500",
-        setMessage,
       );
       return;
     }
 
     setIsSubmitting(true);
-    showMessage("Submitting your thought...", "text-[#B48B7F]", setMessage);
-    console.log(text);
+    showMessage("Submitting your thought...", "text-[#B48B7F]");
     try {
-      const response = await fetch("/api/confessions", {
+      const res = await fetch("/api/confessions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: text }),
       });
-
-      if (!response.ok) throw new Error("Failed to submit confession");
-      const confession = await response.json();
-      console.log(confession);
-      const newConfessionObj: Confession = {
-        id: confession.id,
-        content: confession.content,
-        createdAt: new Date(confession.createdAt),
-      };
-
-      setNewConfession("");
-      showMessage(
-        "Thought released! Thank you for sharing.",
-        "text-[#2C3531]",
-        setMessage,
-      );
-
-      onNewConfession?.(newConfessionObj);
+      if (!res.ok) throw new Error("Failed to submit");
+      setConfessionMessage("");
+      showMessage("Thought released! Thank you for sharing.", "text-[#2C3531]");
+      try {
+        router.refresh();
+      } catch {}
     } catch (_err) {
-      // _err intentionally unused - we still want to show a user-friendly message
       showMessage(
         "Error: Could not release thought. Please try again.",
         "text-red-500",
-        setMessage,
       );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const remainingChars = MAX_CHARS - newConfession.length;
+  const remainingChars = MAX_CHARS - confessionMessage.length;
 
   return (
     <section className="bg-white p-8 rounded-xl shadow-2xl mb-20 border-t-4 border-[#B48B7F]">
@@ -84,8 +63,8 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({
       </h3>
       <form onSubmit={handleSubmit} className="space-y-6">
         <textarea
-          value={newConfession}
-          onChange={(e) => setNewConfession(e.target.value)}
+          value={confessionMessage}
+          onChange={(e) => setConfessionMessage(e.target.value)}
           rows={5}
           placeholder="Type your anonymous thought here. Let it go."
           maxLength={MAX_CHARS}
@@ -102,7 +81,7 @@ const ConfessionForm: React.FC<ConfessionFormProps> = ({
           </span>
           <button
             type="submit"
-            disabled={isSubmitting || newConfession.trim().length === 0}
+            disabled={isSubmitting || confessionMessage.trim().length === 0}
             className="bg-[#2C3531] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B48B7F] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Submitting..." : "Submit Anonymously"}

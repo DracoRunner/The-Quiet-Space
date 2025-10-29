@@ -4,10 +4,12 @@ export type Blog = {
   slug: string;
   excerpt?: string;
   content: string;
-  /** content format: 'markdown' | 'html' | 'text' */
+  readTime?: number;
+  imageSeed: string;
+  category?: string;
   format?: "markdown" | "html" | "text";
   author?: string;
-  publishedAt?: string; // ISO date
+  publishedAt?: Date;
 };
 
 export type RenderBlog = Blog & {

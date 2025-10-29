@@ -73,10 +73,10 @@ const HeroSection: React.FC = () => {
             style={{ transitionDelay: "600ms" }}
           >
             <Image
-              src="https://picsum.photos/seed/calm/600/900"
+              src="https://picsum.photos/seed/calm/2400/3600"
               alt="Calming natural scene"
-              height={100}
-              width={100}
+              height={2400}
+              width={3600}
               className="w-full h-full object-cover opacity-80"
             />
           </div>

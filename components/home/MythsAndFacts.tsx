@@ -52,14 +52,13 @@ const MythsAndFacts: React.FC = () => {
               <MythFactCard key={item.myth} myth={item.myth} fact={item.fact} />
             ))}
           </div>
-          <div className="relative h-[300px] w-full">
+          <div className="relative ">
             <Image
-              src="/images/myths.webp"
+              src="/images/myths.png"
               alt="Common Myths & Facts"
               loading="lazy"
-              className="w-full h-full object-cover"
-              width="100"
-              height="100"
+              width="2000"
+              height="2666"
             />
           </div>
         </div>

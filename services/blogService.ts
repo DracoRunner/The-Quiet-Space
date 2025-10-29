@@ -1,50 +1,87 @@
-import type { Blog } from "##/types/BlogType";
+// dev helper: make sure schema changes (columns) exist so runtime doesn't break
+import { ensureBlogColumns } from "##/lib/dbMigrations";
+import type { Blog } from "##/types/Blog";
+import { prisma } from "./baseService";
 
-export async function getBlogs(): Promise<Blog[]> {
-  try {
-    const url = `${process.env.NEXT_PUBLIC_SITE_URL}/api/blogs`;
-    const res = await fetch(url, {
-      next: { revalidate: 60 },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+ensureBlogColumns(prisma).catch((e) =>
+  console.warn("ensureBlogColumns failed", String(e)),
+);
 
-    if (!res.ok) {
-      console.error("No blogs found");
+const mapRowToBlog = (row: unknown): Blog => {
+  const r = row as Record<string, unknown>;
+  return {
+    id: String(r.id ?? ""),
+    title: String(r.title ?? ""),
+    slug: String(r.slug ?? ""),
+    excerpt: typeof r.excerpt === "string" ? r.excerpt : undefined,
+    content: String(r.content ?? ""),
+    readTime:
+      typeof r.readTime === "number" ? (r.readTime as number) : undefined,
+    imageSeed: String(r.imageSeed ?? ""),
+    category: typeof r.category === "string" ? r.category : undefined,
+    format: (r.format as Blog["format"]) ?? "markdown",
+    author: typeof r.author === "string" ? r.author : undefined,
+    publishedAt: r.publishedAt ? new Date(String(r.publishedAt)) : undefined,
+  } as Blog;
+};
 
-      return [];
-    }
+const getBlogs = async (): Promise<Blog[]> => {
+  const rows = await prisma.blog.findMany({ orderBy: { publishedAt: "desc" } });
+  return rows.map(mapRowToBlog);
+};
 
-    const data = (await res.json()) as Blog[];
-    return data;
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-    return [];
-  }
-}
+const getBlogBySlug = async (slug: string): Promise<Blog | null> => {
+  const row = await prisma.blog.findFirst({ where: { slug } });
+  return row ? mapRowToBlog(row) : null;
+};
 
-export async function getBlogById(id: string): Promise<Blog | null> {
-  try {
-    const url = `${process.env.NEXT_PUBLIC_SITE_URL}/api/blogs/${id}`;
-    const res = await fetch(url, {
-      next: { revalidate: 60 },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+const createBlog = async (data: Partial<Blog>): Promise<Blog> => {
+  const created = await prisma.blog.create({
+    data: {
+      title: data.title ?? "Untitled",
+      slug: data.slug ?? String(Date.now()),
+      excerpt: data.excerpt ?? null,
+      content: data.content ?? "",
+      readTime: data.readTime ?? null,
+      imageSeed: data.imageSeed ?? "",
+      category: data.category ?? null,
+      format: data.format ?? "markdown",
+      author: data.author ?? null,
+      publishedAt: data.publishedAt ?? null,
+    },
+  });
+  return mapRowToBlog(created as unknown);
+};
 
-    if (!res.ok) {
-      console.error("Error getBlogById: Blog not found");
-      return null;
-    }
+const deleteBlog = async (id: string): Promise<void> => {
+  await prisma.blog.delete({ where: { id } });
+};
 
-    const data = (await res.json()) as Blog;
-    return data;
-  } catch (error) {
-    console.error("Error fetching blog :", error);
-    return null;
-  }
-}
+const demoBlog = () => {
+  createBlog({
+    id: "a1b2c3d4-...-...",
+    title: "My Raw Markdown Title",
+    slug: "my-raw-markdown-title",
+    excerpt: "This is a test post created from curl.",
+    content:
+      "# My Raw Markdown Title\n\nThis is a test post created from raw markdown.",
+    readTime: 3,
+    imageSeed: "seed-123",
+    category: "personal",
+    format: "markdown",
+    author: "Anonymous",
+    publishedAt: new Date(),
+  }).then((blog) => {
+    console.log("Demo blog created:", blog);
+  });
+};
 
-export default { getBlogs, getBlogById };
+const BlogService = {
+  getBlogs,
+  getBlogBySlug,
+  createBlog,
+  deleteBlog,
+  demoBlog,
+};
+
+export default BlogService;
