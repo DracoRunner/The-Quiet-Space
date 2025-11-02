@@ -1,21 +1,16 @@
 import { NextResponse } from "next/server";
-import ConfessionService from "##/services/confessionService";
+import ConfessionDB from "##/DataBase/ConfessionDB";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { content } = body;
-    if (!content || typeof content !== "string") {
+    const body = (await request.json()) as { content?: unknown };
+    const content = typeof body.content === "string" ? body.content : undefined;
+    if (!content) {
       return NextResponse.json({ error: "Invalid content" }, { status: 400 });
     }
-    const confession = await ConfessionService.createConfession(content);
+    const confession = await ConfessionDB.createConfession(content);
     return NextResponse.json(confession, { status: 201 });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error("Error creating confession:", error);
-    return NextResponse.json(
-      { error: "Failed to create confession" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

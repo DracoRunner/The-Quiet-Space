@@ -1,11 +1,11 @@
-import ConfessionService from "##/services/confessionService";
+import ConfessionDB from "##/DataBase/ConfessionDB";
 import ScrollAnimation from "../common/ScrollAnimation";
 import ConfessionCard from "./ConfessionCard";
 
 export const revalidate = 60;
 
 const ConfessionList = async () => {
-  const confessions = await ConfessionService.getAllConfessions();
+  const confessions = await ConfessionDB.getAllConfessions();
 
   if (confessions.length === 0) {
     return (

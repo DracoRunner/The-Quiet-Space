@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import AppImage from "##/components/AppImage";
 import Markdown from "##/components/Markdown";
-import BlogService from "##/services/BlogService";
+import BlogDB from "##/DataBase/BlogDB";
 
 export const revalidate = 60;
 
@@ -10,7 +10,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const blog = await BlogService.getBlogBySlug(params.slug);
+  const blog = await BlogDB.getBlogBySlug(params.slug);
   return {
     title: blog?.title ?? "Blog",
     description: blog?.excerpt ?? undefined,
@@ -19,7 +19,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function BlogPage(props: Props) {
   const params = await props.params;
-  const blog = await BlogService.getBlogBySlug(params.slug);
+  const blog = await BlogDB.getBlogBySlug(params.slug);
 
   if (!blog) {
     return (

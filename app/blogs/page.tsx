@@ -1,7 +1,22 @@
 import BlogCard from "##/components/blogs/BlogCard";
 import ScrollAnimation from "##/components/common/ScrollAnimation";
-import BlogService from "##/services/blogService";
-import type { RenderBlog } from "##/types/Blog";
+import BlogDB from "##/DataBase/BlogDB";
+
+// Local fallback type for renderable blog posts. Replace with shared type if you
+// add `types/Blog` later.
+type RenderBlog = {
+  id: string;
+  slug: string;
+  title: string;
+  content: string;
+  excerpt: string | null;
+  readTime: number | null;
+  imageSeed: string;
+  category: string | null;
+  format: string;
+  author: string | null;
+  publishedAt: Date | null;
+};
 
 export const metadata = {
   title: "Blogs - The Quiet Space",
@@ -12,7 +27,7 @@ export const metadata = {
 export const revalidate = 60;
 
 const Blogs = async () => {
-  const blogPosts = await BlogService.getBlogs();
+  const blogPosts = await BlogDB.getBlogs();
   return (
     <main className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
       <ScrollAnimation>

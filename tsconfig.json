@@ -25,7 +25,8 @@
       "##/types/*": ["./types/*"],
       "##/data/*": ["./data/*"],
       "##/api/*": ["./app/api/*"],
-      "##/services/*": ["./services/*"]
+      "##/services/*": ["./services/*"],
+      "##/DataBase/*": ["./DataBase/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

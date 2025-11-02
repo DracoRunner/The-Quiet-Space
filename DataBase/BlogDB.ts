@@ -1,11 +1,5 @@
-// dev helper: make sure schema changes (columns) exist so runtime doesn't break
-import { ensureBlogColumns } from "##/lib/dbMigrations";
-import type { Blog } from "##/types/Blog";
-import { prisma } from "./baseService";
-
-ensureBlogColumns(prisma).catch((e) =>
-  console.warn("ensureBlogColumns failed", String(e)),
-);
+import type { Blog } from "@prisma/client";
+import { prisma, safeDbTransaction } from "./BaseDb";
 
 const mapRowToBlog = (row: unknown): Blog => {
   const r = row as Record<string, unknown>;
@@ -26,35 +20,45 @@ const mapRowToBlog = (row: unknown): Blog => {
 };
 
 const getBlogs = async (): Promise<Blog[]> => {
-  const rows = await prisma.blog.findMany({ orderBy: { publishedAt: "desc" } });
-  return rows.map(mapRowToBlog);
+  return safeDbTransaction(async () => {
+    const rows = await prisma.blog.findMany({
+      orderBy: { publishedAt: "desc" },
+    });
+    return rows.map(mapRowToBlog);
+  });
 };
 
 const getBlogBySlug = async (slug: string): Promise<Blog | null> => {
-  const row = await prisma.blog.findFirst({ where: { slug } });
-  return row ? mapRowToBlog(row) : null;
+  return safeDbTransaction(async () => {
+    const row = await prisma.blog.findFirst({ where: { slug } });
+    return row ? mapRowToBlog(row) : null;
+  });
 };
 
 const createBlog = async (data: Partial<Blog>): Promise<Blog> => {
-  const created = await prisma.blog.create({
-    data: {
-      title: data.title ?? "Untitled",
-      slug: data.slug ?? String(Date.now()),
-      excerpt: data.excerpt ?? null,
-      content: data.content ?? "",
-      readTime: data.readTime ?? null,
-      imageSeed: data.imageSeed ?? "",
-      category: data.category ?? null,
-      format: data.format ?? "markdown",
-      author: data.author ?? null,
-      publishedAt: data.publishedAt ?? null,
-    },
+  return safeDbTransaction(async () => {
+    const created = await prisma.blog.create({
+      data: {
+        title: data.title ?? "Untitled",
+        slug: data.slug ?? String(Date.now()),
+        excerpt: data.excerpt ?? null,
+        content: data.content ?? "",
+        readTime: data.readTime ?? null,
+        imageSeed: data.imageSeed ?? "",
+        category: data.category ?? null,
+        format: data.format ?? "markdown",
+        author: data.author ?? null,
+        publishedAt: data.publishedAt ?? null,
+      },
+    });
+    return mapRowToBlog(created as unknown);
   });
-  return mapRowToBlog(created as unknown);
 };
 
 const deleteBlog = async (id: string): Promise<void> => {
-  await prisma.blog.delete({ where: { id } });
+  return safeDbTransaction(async () => {
+    await prisma.blog.delete({ where: { id } });
+  });
 };
 
 const demoBlog = () => {
@@ -76,7 +80,7 @@ const demoBlog = () => {
   });
 };
 
-const BlogService = {
+const BlogDB = {
   getBlogs,
   getBlogBySlug,
   createBlog,
@@ -84,4 +88,4 @@ const BlogService = {
   demoBlog,
 };
 
-export default BlogService;
+export default BlogDB;

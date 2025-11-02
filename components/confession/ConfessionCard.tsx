@@ -1,7 +1,7 @@
 "use client";
 
+import type { Confession } from "@prisma/client";
 import type React from "react";
-import type { Confession } from "##/types/Confession";
 import ModalManager from "##/utils/ModalManager";
 import ConfessionModal from "./ConfessionModal";
 
