@@ -1,6 +1,16 @@
+"use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import type React from "react";
 
 const AboutKaagaz: React.FC = () => {
+  const router = useRouter();
+
+  const handleBuyBookClick = () => {
+    router.push("/about");
+  };
+
   return (
     <section className="bg-[#F0F2EF] py-24 px-4">
       <div className="max-w-6xl mx-auto">
@@ -20,18 +30,27 @@ const AboutKaagaz: React.FC = () => {
               their identity, and embrace the possibility of growth and renewal
               after heartbreak.
             </p>
-            <button type="button" className="btn-pill">
+            <button
+              type="button"
+              className="btn-pill"
+              onClick={handleBuyBookClick}
+            >
               Buy Kaagaz Now
             </button>
           </div>
           <div className="md:col-span-2">
-            {/* <Image
-              src="https://placehold.co/400x500/1E3A2B/F0F2EF?text=KAAGAZ"
-              alt="Book cover of Kaagaz"
-              className="rounded-lg shadow-2xl w-full object-cover aspect-[4/5]"
-              width={400}
-              height={500}
-            /> */}
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#006442] to-[#8C2D3A] rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
+              <div className="relative bg-white p-4 rounded-lg shadow-2xl">
+                <Image
+                  src="/images/book_cover.png"
+                  alt="Book cover of Kaagaz"
+                  className="rounded-lg shadow-lg w-full object-cover aspect-[4/5]"
+                  width={400}
+                  height={500}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

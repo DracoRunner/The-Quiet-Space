@@ -1,3 +1,4 @@
+import BookSellSection from "##/components/about/BookSellSection";
 import FounderSection from "##/components/about/FounderSection";
 import MissionSection from "##/components/about/MissionSection";
 import PhilosophySection from "##/components/about/PhilosophySection";
@@ -12,7 +13,10 @@ const About: React.FC = () => {
       <ScrollAnimation delay={200}>
         <FounderSection />
       </ScrollAnimation>
-      <ScrollAnimation delay={200}>
+      <ScrollAnimation delay={300}>
+        <BookSellSection />
+      </ScrollAnimation>
+      <ScrollAnimation delay={400}>
         <PhilosophySection />
       </ScrollAnimation>
     </main>
