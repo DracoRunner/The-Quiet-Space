@@ -2,6 +2,9 @@ import ScrollAnimation from "##/components/common/ScrollAnimation";
 import ConfessionForm from "##/components/confession/ConfessionForm";
 import ConfessionList from "##/components/confession/ConfessionLIst";
 
+// Revalidate every 60 seconds to show new confessions
+export const revalidate = 60;
+
 const ConfessionPage: React.FC = () => {
   return (
     <main className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">

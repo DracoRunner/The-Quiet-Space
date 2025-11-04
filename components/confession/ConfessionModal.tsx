@@ -2,8 +2,14 @@
 
 import type React from "react";
 import { useRef } from "react";
-import type { Confession } from "##/types/Confession";
 import ModalManager from "##/utils/ModalManager";
+
+// Local type (avoid importing server-only Prisma types into client bundle)
+interface Confession {
+  id: string;
+  content: string;
+  createdAt: string | Date;
+}
 
 interface ConfessionModalProps {
   confession: Confession;
@@ -20,13 +26,18 @@ const ConfessionModal: React.FC<ConfessionModalProps> = ({ confession }) => {
   };
   if (!confession) return null;
 
+  const date =
+    typeof confession.createdAt === "string"
+      ? new Date(confession.createdAt)
+      : confession.createdAt;
+
   const timeString =
-    confession.createdAt.toLocaleTimeString("en-US", {
+    date.toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
     }) +
     ", " +
-    confession.createdAt.toLocaleDateString("en-US", {
+    date.toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
     });

@@ -1,10 +1,20 @@
 import Link from "next/link";
 import type React from "react";
-import type { Blog } from "##/types/Blog";
+
+type BlogProps = {
+  id?: string;
+  title: string;
+  slug: string;
+  category?: string | null;
+  readTime?: number | null;
+  excerpt?: string | null;
+  imageSeed?: string;
+};
+
 import AppImage from "../AppImage";
 import Card from "../common/Card";
 
-const BlogCard: React.FC<Blog> = ({
+const BlogCard: React.FC<BlogProps> = ({
   title,
   slug,
   category,
@@ -16,7 +26,7 @@ const BlogCard: React.FC<Blog> = ({
     <Card className="overflow-hidden hover:shadow-2xl transition duration-300 border border-gray-100 h-full">
       <div className="w-full h-56 relative">
         <AppImage
-          imageUrl={imageSeed}
+          imageUrl={imageSeed ?? ""}
           width={600}
           height={400}
           altText={title}

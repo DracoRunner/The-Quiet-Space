@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useRef, useState } from "react";
-import BookingService from "##/services/bookingService";
 import ModalManager from "##/utils/ModalManager";
 
 const BookingModal: React.FC = () => {
@@ -38,38 +37,20 @@ const BookingModal: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const result = await BookingService.createBooking({
-        name: formData.name,
-        email: formData.email,
-        when: formData.when,
-        reason: formData.reason,
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-
-      // compute SHA-256 hash of the email and store booking info locally
-      const encoder = new TextEncoder();
-      const data = encoder.encode(formData.email.trim().toLowerCase());
-      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      // base64url encode
-      const b64 = btoa(String.fromCharCode(...hashArray));
-      const base64url = b64
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "");
-
-      const store = { bookingId: result.bookingId, emailHash: base64url };
-      try {
-        localStorage.setItem("tqs_booking", JSON.stringify(store));
-      } catch (_err) {
-        // ignore storage errors
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-
       setIsSubmitted(true);
-      // close modal and redirect to bookings manage page
       ModalManager.close();
       router.push("/bookings");
-    } catch (error) {
-      console.error("Error submitting booking:", error);
+    } catch (_: unknown) {
       alert("Failed to send booking request. Please try again later.");
     } finally {
       setIsSubmitting(false);
@@ -99,19 +80,19 @@ const BookingModal: React.FC = () => {
       <div
         id="modalContent"
         ref={contentRef}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 transform transition-all duration-300"
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 transform transition-all duration-300"
       >
-        <div className="flex justify-between items-start mb-6">
+        <div className="relative mb-6">
           <h3
             id="bookingModalTitle"
-            className="text-3xl font-bold text-[#B48B7F]"
+            className="text-3xl font-bold text-[#B48B7F] text-center"
           >
             {isSubmitted ? "Request Sent!" : "Book Your Session"}
           </h3>
           <button
             type="button"
             onClick={() => ModalManager.close()}
-            className="text-[#2C3531] hover:text-red-500 transition"
+            className="absolute top-4 right-4 text-[#2C3531] hover:text-red-500 transition"
             aria-label="Close modal"
           >
             <svg

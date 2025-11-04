@@ -10,7 +10,7 @@ const Header: React.FC = () => {
           href="/"
           className="text-2xl font-bold text-[#2C3531] tracking-wider"
         >
-          The Quiet Space
+          Groom
         </Link>
         <nav className="hidden md:flex space-x-8 text-lg font-medium">
           <Link

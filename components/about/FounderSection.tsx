@@ -18,10 +18,9 @@ const FounderSection: React.FC = () => {
         </h3>
         <p className="text-lg text-gray-700">
           With a background in cognitive behavioral therapy and
-          mindfulness-based stress reduction, Jane established The Quiet Space
-          to move beyond generic advice. She focuses on creating deeply
-          personalized plans that respect the unique pace and context of every
-          client.
+          mindfulness-based stress reduction, Jane established Groom to move
+          beyond generic advice. She focuses on creating deeply personalized
+          plans that respect the unique pace and context of every client.
         </p>
         <p className="text-lg text-gray-700 italic border-l-4 border-[#B48B7F] pl-4">
           "My approach is rooted in the idea that you already possess the wisdom
