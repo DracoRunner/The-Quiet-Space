@@ -9,6 +9,7 @@
     "lint": "biome check",
     "format": "biome format --write",
     "prepare": "husky install",
+    "create:component": "node scripts/create-component.js",
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
