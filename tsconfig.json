@@ -20,7 +20,7 @@
     ],
     "paths": {
       "##/lib/*": ["./lib/*"],
-      "##/components/*": ["./components/*"],
+      "##/ui/*": ["./components/common-ui/*"],
       "##/utils/*": ["./utils/*"],
       "##/types/*": ["./types/*"],
       "##/data/*": ["./data/*"],
