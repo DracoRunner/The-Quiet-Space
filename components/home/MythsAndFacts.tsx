@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type React from "react";
+import AppImage from "../AppImage";
 
 interface MythFactCardProps {
   myth: string;
@@ -53,12 +53,11 @@ const MythsAndFacts: React.FC = () => {
             ))}
           </div>
           <div className="relative ">
-            <Image
+            <AppImage
               src="/images/myths.png"
               alt="Common Myths & Facts"
-              loading="lazy"
-              width="2000"
-              height="2666"
+              width={2000}
+              height={2666}
             />
           </div>
         </div>

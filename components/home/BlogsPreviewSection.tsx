@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
+import AppImage from "../AppImage";
 import Card from "../common/Card";
 import ScrollAnimation from "../common/ScrollAnimation";
 
@@ -44,7 +44,7 @@ const BlogsPreviewSection: React.FC = () => {
           {blogPreviews.map((blog, index) => (
             <ScrollAnimation key={blog.imageSeed} delay={index * 150}>
               <Card className="overflow-hidden hover:shadow-2xl transition duration-300 h-full">
-                <Image
+                <AppImage
                   src={`https://picsum.photos/seed/${blog.imageSeed}/600/400`}
                   alt={blog.category}
                   width={600}

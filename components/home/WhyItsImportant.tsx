@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type React from "react";
+import AppImage from "../AppImage";
 
 const ListItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <li className="flex items-start">
@@ -27,13 +27,12 @@ const WhyItsImportant: React.FC = () => {
     <section id="importance" className=" py-24 px-4">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div className="h-[400px] relative">
-          <Image
+          <AppImage
             src="/images/whyimp.webp"
             alt="Why It's Important"
-            loading="lazy"
             className="w-full h-full object-contain"
-            width="2000"
-            height="2666"
+            width={2000}
+            height={2666}
           />
         </div>
         <div>

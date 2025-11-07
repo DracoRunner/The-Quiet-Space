@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type React from "react";
+import AppImage from "../AppImage";
 
 const Founder: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const Founder: React.FC = () => {
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-[#006442] to-[#8C2D3A] rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
               <div className="relative bg-white p-4 rounded-lg shadow-2xl">
-                <Image
+                <AppImage
                   src="/images/founder.jpg"
                   alt="Satwikk Arora, Founder"
                   className="rounded-lg shadow-lg w-full object-cover aspect-[4/5]"

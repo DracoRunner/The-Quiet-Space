@@ -5,38 +5,38 @@ import type { FC } from "react";
 import { useMemo } from "react";
 
 type Props = {
-  imageUrl: string;
-  altText: string;
+  src: string;
+  alt: string;
   width?: number;
   height?: number;
   className?: string;
 };
 
 const AppImage: FC<Props> = ({
-  imageUrl,
-  altText,
+  src,
+  alt,
   width = 800,
   height = 450,
   className = "w-full h-auto object-cover rounded",
 }) => {
   const imageSrc = useMemo(() => {
-    if (!imageUrl) return "";
+    if (!src) return "";
+    return src;
+  }, [src]);
 
-    try {
-      const seed = new URL(imageUrl);
-      return seed.toString();
-    } catch {
-      return `https://picsum.photos/seed/${encodeURIComponent(imageUrl)}/600/400`;
-    }
-  }, [imageUrl]);
+  const onError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    event.currentTarget.src = `https://picsum.photos/seed/i123123/600/400`;
+  };
 
   return (
     <Image
       src={imageSrc}
       width={width}
       height={height}
-      alt={altText}
+      alt={alt}
+      loading="lazy"
       className={className}
+      onError={onError}
     />
   );
 };

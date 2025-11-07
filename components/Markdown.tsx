@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
+import AppImage from "./AppImage";
 
 type Props = {
   content: string;
@@ -50,7 +50,7 @@ const Markdown: FC<Props> = ({ content, blogTitle, className }) => {
                 : `/${src}`;
             const alt = (props.alt as string) ?? blogTitle ?? "";
             return (
-              <Image
+              <AppImage
                 src={imgSrc}
                 alt={alt}
                 width={800}

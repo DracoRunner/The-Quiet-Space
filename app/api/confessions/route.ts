@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import ConfessionDB from "##/DataBase/ConfessionDB";
 
@@ -9,6 +10,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid content" }, { status: 400 });
     }
     const confession = await ConfessionDB.createConfession(content);
+    revalidatePath("/confessions");
     return NextResponse.json(confession, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });

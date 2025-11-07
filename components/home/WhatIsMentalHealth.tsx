@@ -1,5 +1,5 @@
 import { Heart } from "lucide-react";
-import Image from "next/image";
+import AppImage from "../AppImage";
 
 function WhatIsMentalHealthSection() {
   return (
@@ -47,13 +47,12 @@ function WhatIsMentalHealthSection() {
             </div>
           </div>
           <div className="relative h-[500px] w-full">
-            <Image
+            <AppImage
               src="/images/whatismh.webp"
               alt="What is Mental Health"
-              loading="lazy"
               className="w-full h-full object-contain"
-              width="2000"
-              height="2666"
+              width={2000}
+              height={2666}
             />
           </div>
         </div>

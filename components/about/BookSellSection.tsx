@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type React from "react";
+import AppImage from "../AppImage";
 
 const BookSellSection: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ const BookSellSection: React.FC = () => {
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-[#006442] to-[#8C2D3A] rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
               <div className="relative bg-white p-4 rounded-lg shadow-2xl">
-                <Image
+                <AppImage
                   src="/images/book_cover.png"
                   alt="Mental Health Guide by Satwikk Arora"
                   width={300}

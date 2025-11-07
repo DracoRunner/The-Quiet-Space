@@ -1,8 +1,8 @@
 "use client";
-import Image from "next/image";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
 import ModalManager from "##/utils/ModalManager";
+import AppImage from "../AppImage";
 import BookingModal from "../BookingModal";
 
 const HeroSection: React.FC = () => {
@@ -72,7 +72,7 @@ const HeroSection: React.FC = () => {
             }`}
             style={{ transitionDelay: "600ms" }}
           >
-            <Image
+            <AppImage
               src="https://picsum.photos/seed/calm/2400/3600"
               alt="Calming natural scene"
               height={2400}

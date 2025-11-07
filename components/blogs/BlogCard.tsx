@@ -26,10 +26,10 @@ const BlogCard: React.FC<BlogProps> = ({
     <Card className="overflow-hidden hover:shadow-2xl transition duration-300 border border-gray-100 h-full">
       <div className="w-full h-56 relative">
         <AppImage
-          imageUrl={imageSeed ?? ""}
+          src={imageSeed ?? ""}
           width={600}
           height={400}
-          altText={title}
+          alt={title}
           className="w-full h-full object-cover"
         />
       </div>

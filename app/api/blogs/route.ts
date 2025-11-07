@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import BlogDB from "##/DataBase/BlogDB";
 
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
         : undefined,
     });
 
+    revalidatePath("/blogs");
     return NextResponse.json(created, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

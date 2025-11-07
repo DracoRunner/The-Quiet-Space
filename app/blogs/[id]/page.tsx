@@ -53,10 +53,10 @@ export default async function BlogPage(props: Props) {
         </p>
         <div className="mb-8">
           <AppImage
-            imageUrl={blog.imageSeed}
+            src={blog.imageSeed}
             width={1200}
             height={600}
-            altText={blog.title}
+            alt={blog.title}
             className="w-full h-auto object-cover rounded"
           />
         </div>
