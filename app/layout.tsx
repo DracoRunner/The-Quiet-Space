@@ -21,6 +21,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Groom - Mental Health Support",
   description: "A safe space for mental health support and confessions",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

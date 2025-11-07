@@ -30,8 +30,12 @@ enum Format {
 model Confession {
   id        String   @id @default(uuid())
   content   String
+  // Optional JSON object storing submitter details when the user agrees to share
+  submitterDetails Json?  @map("submitter_details")
   createdAt DateTime @default(now()) @map("created_at")
 }
+
+
 
 model Booking {
   id        String   @id @default(uuid())

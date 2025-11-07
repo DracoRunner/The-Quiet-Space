@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import BookingDB from "##/DataBase/BookingDB";
@@ -82,6 +83,7 @@ export async function PUT(
         // Continue even if email fails - booking is still confirmed
       }
 
+      revalidatePath("/admin/bookings");
       return NextResponse.json(
         {
           ...updatedBooking,
@@ -116,6 +118,7 @@ export async function DELETE(
     }
 
     await BookingDB.deleteBooking(id);
+    revalidatePath("/admin/bookings");
     return NextResponse.json({ message: "Booking deleted" }, { status: 200 });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

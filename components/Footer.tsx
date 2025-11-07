@@ -8,22 +8,22 @@ const Footer: React.FC = () => {
         <div className="flex space-x-6 mt-4 md:mt-0">
           <a
             href="#privacy"
-            className="hover:text-white transition duration-300 text-sm"
+            className="hover:text-black transition duration-300 text-sm"
           >
             Privacy
           </a>
 
           <a
             href="#terms"
-            className="hover:text-white transition duration-300 text-sm"
+            className="hover:text-black transition duration-300 text-sm"
           >
             Terms
           </a>
           <a
             href="https://www.prajanova.com"
-            className="hover:text-white transition duration-300 text-sm"
+            className="hover:text-black transition duration-300 text-sm"
           >
-            Developed by @prajanova
+            Powered by @prajanova
           </a>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import BookingDB from "##/DataBase/BookingDB";
 
@@ -6,6 +7,7 @@ export async function POST(request: Request) {
     const body = (await request.json()) as Record<string, unknown>;
 
     const newBooking = await BookingDB.createBooking(body);
+    revalidatePath("/admin/bookings");
     return NextResponse.json(newBooking, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

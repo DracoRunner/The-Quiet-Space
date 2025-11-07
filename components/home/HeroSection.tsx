@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
 import ModalManager from "##/utils/ModalManager";
@@ -27,10 +28,16 @@ const HeroSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-5 gap-12 items-center">
         <div className="md:col-span-3 space-y-8">
           <p
-            className={`text-lg text-[#B48B7F] font-semibold uppercase tracking-widest ${getAnimationClasses(
+            className={`flex items-center text-lg text-[#B48B7F] font-semibold uppercase tracking-widest ${getAnimationClasses(
               "delay-100",
             )}`}
           >
+            <Image
+              alt="groom logo"
+              src="/images/logo.png"
+              height={100}
+              width={100}
+            />
             Introspect, Identify, Heal
           </p>
           <h2

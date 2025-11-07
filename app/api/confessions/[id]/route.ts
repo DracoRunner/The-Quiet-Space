@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import ConfessionDB from "##/DataBase/ConfessionDB";
@@ -14,6 +15,8 @@ export async function DELETE(
     }
 
     await ConfessionDB.deleteConfession(id);
+    revalidatePath("/admin/confessions");
+    revalidatePath("/confessions");
     return NextResponse.json(
       { message: "Confession deleted" },
       { status: 200 },

@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import BlogDB from "##/DataBase/BlogDB";
@@ -14,6 +15,7 @@ export async function DELETE(
     }
 
     await BlogDB.deleteBlog(id);
+    revalidatePath("/blogs");
     return NextResponse.json({ message: "Blog deleted" }, { status: 200 });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
