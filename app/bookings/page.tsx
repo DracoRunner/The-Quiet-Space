@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Modal from "##/components/Modal";
 import BookingList from "./BookingList";
 
@@ -25,7 +25,7 @@ interface BackendBooking {
   createdAt: string;
 }
 
-const BookingPage: React.FC = () => {
+function BookingPageContent() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
@@ -35,9 +35,9 @@ const BookingPage: React.FC = () => {
     const fetchBookings = async () => {
       try {
         const res = await fetch("/api/booking");
-        const data = await res.json();
+        const data: BackendBooking[] = await res.json();
 
-        const formatted: Booking[] = (data as BackendBooking[]).map((b) => {
+        const formatted: Booking[] = data.map((b) => {
           const dateObj = new Date(b.when);
           return {
             id: b.id,
@@ -124,6 +124,18 @@ const BookingPage: React.FC = () => {
       <Modal />
     </div>
   );
-};
+}
 
-export default BookingPage;
+export default function BookingPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-[80vh] text-gray-600">
+          Loading...
+        </div>
+      }
+    >
+      <BookingPageContent />
+    </Suspense>
+  );
+}
