@@ -46,6 +46,12 @@ const Header: React.FC = () => {
           >
             Confession
           </Link>
+          <Link
+            href="/bookings"
+            className="hover:text-[#B48B7F] transition duration-300"
+          >
+            Bookings
+          </Link>
         </nav>
         <BookingButton className="btn-sm" />
       </div>

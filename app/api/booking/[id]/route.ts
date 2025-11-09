@@ -82,7 +82,7 @@ export async function PUT(
         console.error("Failed to send email:", emailError);
         // Continue even if email fails - booking is still confirmed
       }
-
+      revalidatePath("/bookings");
       revalidatePath("/admin/bookings");
       return NextResponse.json(
         {
@@ -118,6 +118,7 @@ export async function DELETE(
     }
 
     await BookingDB.deleteBooking(id);
+    revalidatePath("/bookings");
     revalidatePath("/admin/bookings");
     return NextResponse.json({ message: "Booking deleted" }, { status: 200 });
   } catch (error) {
